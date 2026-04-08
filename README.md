@@ -1,6 +1,6 @@
 # Jigyasa News
 
-A GitHub-ready static front-end rebuilt from the shared Gemini concept page.
+A GitHub-ready static front-end rebuilt for the college project.
 
 ## Files
 
