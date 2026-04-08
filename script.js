@@ -9,7 +9,6 @@ const scanBtn = document.querySelector('.scanner button[type="submit"]');
 const resultsSection = document.getElementById('verified');
 const resultsContent = document.querySelector('.result-content');
 const statusBadge = document.querySelector('.status-badge');
-
 let theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
 root.setAttribute('data-theme', theme);
 
