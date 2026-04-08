@@ -213,7 +213,7 @@ footer { border-top: 1px solid color-mix(in srgb, var(--color-text) 10%, transpa
     .guide-intro { font-size: var(--text-base); margin-bottom: var(--space-4); }
     .method-grid { grid-template-columns: 1fr; gap: var(--space-3); }
     .method-card { display: grid; grid-template-columns: auto 1fr; text-align: left; gap: var(--space-3); align-items: start; padding: 1rem; }
-    .method-card small { margin-bottom: 0; align-self: start; }
+    
     .method-card h3 { margin-bottom: 0.3rem; }
     .method-card p { line-height: 1.5; }
     .about { padding: 0 var(--space-2); }
