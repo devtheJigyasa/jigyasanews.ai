@@ -4,9 +4,8 @@
 const root = document.documentElement;
 const toggle = document.querySelector('[data-theme-toggle]');
 const input = document.getElementById('claimInput');
-const count = document.getElementById('charCount');
+const count = document.querySelector('.counter');
 const scanBtn = document.getElementById('scanBtn');
-const scanBtnText = document.getElementById('scanBtnText');
 const resultsSection = document.getElementById('results');
 const resultsContent = document.getElementById('resultsContent');
 const resultBadge = document.getElementById('resultBadge');
@@ -29,8 +28,7 @@ toggle.addEventListener('click', () => {
 
 // Character Counter
 input.addEventListener('input', () => {
-  count.textContent = input.value.length;
-});
+count.textContent = `${input.value.length} / 1000`;});
 // Demo Analysis Engine (Replace with real API in production)
 function analyzeClaim(claim) {
   const text = claim.toLowerCase();
