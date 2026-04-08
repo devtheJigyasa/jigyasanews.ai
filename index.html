@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Jigyasa News - AI-powered fact-checking and news verification platform for accurate news updates" />
+    <meta name="description" content="Curious News - AI-powered fact-checking and news verification platform for accurate news updates" />
     <meta name="keywords" content="news, AI, fact-check, verification, fake news, misinformation" />
-    <meta name="author" content="Jigyasa" />
-    <title>Jigyasa News | AI Fact-Checking Platform</title>
+    <meta name="author" content="Curious" />
+    <title>Curious News | AI Fact-Checking Platform</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="./style.css" />
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='75' font-size='75' fill='%230f6b63' font-weight='bold'>🔍</text></svg>" />
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='75' font-size='75' fill='%23d4af37' font-weight='bold'>?</text></svg>" />
 </head>
 <body>
     <a class="skip-link" href="#main">Skip to content</a>
@@ -18,10 +18,10 @@
     <header>
         <div class="container">
             <nav class="nav">
-                <a class="brand" href="#top" aria-label="Jigyasa News home">
-                    <span class="brand-mark">🔍</span>
+                <a class="brand" href="#top" aria-label="Curious News home">
+                    <span class="brand-mark">?</span>
                     <div>
-                        <span class="brand-name">Jigyasa</span>
+                        <span class="brand-name">Curious</span>
                         <span class="brand-tag">News Verification</span>
                     </div>
                 </a>
@@ -32,49 +32,40 @@
                     <button class="theme-toggle" data-theme-toggle aria-label="Toggle dark mode"></button>
                 </div>
             </nav>
-        </div>
-    </header>
 
     <main id="main" class="container">
         <section class="hero">
             <div class="hero-copy">
                 <span class="eyebrow">AI-Powered Verification</span>
-                <h1>Verify the Truth in a Digital Age</h1>
+                <h1>Ask Questions. Find Truth.</h1>
                 <p>Get real-time fact-checking and verification of news stories with advanced AI technology. Paste any claim, headline, or article snippet to get instant analysis.</p>
                 <div class="hero-actions">
                     <a class="btn btn-primary" href="#scanner">Start Scanning</a>
-                    <a class="btn btn-secondary" href="#guide">Learn How</a>
+                    <a class="btn btn-ghost" href="#guide">Learn How</a>
                 </div>
             </div>
-            <div class="hero-panel">
-                <div class="hero-panel-header">
+            <div class="scanner" id="scanner">
+                <div class="scanner-header">
                     <span class="counter">0 / 1000</span>
-                    <span class="eyebrow">Claim Scanner</span>
+                    <span class="scanner-label">Claim Scanner</span>
                 </div>
-                <textarea id="claimInput" placeholder="Paste a claim, headline, or news snippet here to verify..." maxlength="1000"></textarea>
-                <div class="panel-actions">
-                    <button id="scanBtn" class="btn btn-primary">
-                        <span id="scanBtnText">Scan Claim</span>
-                    </button>
-                </div>
-                <p class="panel-note">Press Ctrl+Enter to scan quickly</p>
+                <textarea class="input" placeholder="Paste a claim, headline, or news snippet here to verify..." aria-label="Claim text" maxlength="1000"></textarea>
+                <button class="btn btn-primary btn-full" type="submit">Scan Claim</button>
+                <p class="hint">Press Ctrl+Enter to scan quickly</p>
             </div>
         </section>
 
-        <section id="results" class="results" hidden>
+        <section class="results" id="verified" aria-live="polite">
             <div class="section-head">
                 <h2>Analysis Results</h2>
-                <span id="resultBadge" class="eyebrow">Pending</span>
+                <span class="status-badge pending">Pending</span>
             </div>
-            <div id="resultsContent" class="results-grid">
-                <div class="result-card">
-                    <h3>Verification Result</h3>
-                    <p>Your claim analysis will appear here.</p>
-                </div>
+            <div class="result-content">
+                <p class="placeholder">Your claim analysis will appear here.</p>
             </div>
         </section>
 
-        <section id="trending" class="stats">
+        <section class="trending" id="trending">
             <div class="section-head">
                 <h2>Trending Now</h2>
             </div>
@@ -89,46 +80,46 @@
                 </div>
                 <div class="metric-card">
                     <strong>45K+</strong>
-                    <span>Users Trust Jigyasa</span>
+                    <span>Users Trust Curious</span>
                 </div>
             </div>
         </section>
 
-        <section id="verified" class="guide">
+        <section class="guide" id="guide">
             <div class="section-head">
                 <h2>How We Verify</h2>
+                <p class="guide-intro">Our AI-powered verification process uses multiple signals to assess the credibility of any claim.</p>
             </div>
-            <p class="guide-intro">Our AI-powered verification process uses multiple signals to assess the credibility of any claim.</p>
             <div class="method-grid">
-                <div class="method-card">
+                <article class="method-card">
                     <small>1</small>
                     <h3>Stop</h3>
                     <p>Pause before sharing. Ask yourself if the claim seems too shocking to be true.</p>
-                </div>
-                <div class="method-card">
+                </article>
+                <article class="method-card">
                     <small>2</small>
                     <h3>Investigate</h3>
                     <p>Check the source. Is it a reputable outlet with editorial standards?</p>
-                </div>
-                <div class="method-card">
+                </article>
+                <article class="method-card">
                     <small>3</small>
                     <h3>Find</h3>
                     <p>Search for other coverage. Are multiple credible sources reporting the same?</p>
-                </div>
-                <div class="method-card">
+                </article>
+                <article class="method-card">
                     <small>4</small>
                     <h3>Trace</h3>
                     <p>Go back to the original source. Has the claim been taken out of context?</p>
-                </div>
+                </article>
             </div>
         </section>
 
-        <section id="about" class="guide">
+        <section class="about" id="about">
             <div class="section-head">
-                <h2>About Jigyasa</h2>
+                <h2>About Curious</h2>
             </div>
-            <p class="guide-intro">Jigyasa is an AI-powered platform dedicated to combating misinformation and promoting media literacy. We use advanced machine learning algorithms to verify news stories and provide users with accurate, trustworthy information.</p>
-            <p class="guide-intro">Our mission is to create a more informed society where people can trust the information they consume.</p>
+            <p class="about-intro">Curious is an AI-powered platform dedicated to combating misinformation and promoting media literacy. We use advanced machine learning algorithms to verify news stories and provide users with accurate, trustworthy information.</p>
+            <p>Our mission is to create a more informed society where people can trust the information they consume.</p>
         </section>
     </main>
 
@@ -136,9 +127,9 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-brand">
-                    <span class="brand-mark">🔍</span>
+                    <span class="brand-mark">?</span>
                     <div>
-                        <span class="brand-name">Jigyasa</span>
+                        <span class="brand-name">Curious</span>
                         <span class="brand-tag">News Verification</span>
                     </div>
                 </div>
@@ -149,10 +140,12 @@
                     <a href="#feedback">Feedback</a>
                 </div>
             </div>
-            <p class="footer-note">© 2024 Jigyasa News. All rights reserved. | Made with ❤️ for a truthful world</p>
+            <p class="footer-note">© 2024 Curious News. All rights reserved. | Made with ❤️ for a truthful world</p>
         </div>
     </footer>
 
     <script src="./script.js"></script>
 </body>
 </html>
+        </div>
+    </header>
