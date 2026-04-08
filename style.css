@@ -49,7 +49,9 @@ body {
                 var(--color-bg);
 }
 a, button, textarea { font: inherit; color: inherit; }
-button { cursor: pointer; border: none;
+button { cursor: pointer; border: none;;
+    transition: transform var(--transition), background var(--transition), color var(--transition);
+}
 .skip-link { position: absolute; left: 1rem; top: -3rem;
     background: var(--color-primary); color: var(--color-text-inverse);
     padding: 0.6rem 0.9rem; border-radius: var(--radius-md); z-index: 20; }
@@ -243,5 +245,4 @@ footer { border-top: 1px solid color-mix(in srgb, var(--color-text) 10%, transpa
 @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
 }
-    transition: transform var(--transition), background var(--transition), color var(--transition); }
-.container { width: min(calc(100% - 2rem), var(--content)); margin: 0 auto; }
+    
