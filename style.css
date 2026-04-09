@@ -2743,3 +2743,287 @@ footer::before {
     margin: 0 auto;
 }
 
+/* =========================================== */
+/* TRENDING NOW SECTION - FULL ENHANCEMENT */
+/* =========================================== */
+.trending {
+    margin-top: var(--space-10);
+    position: relative;
+}
+.trending h2 {
+    font-family: var(--font-display);
+    font-size: var(--text-xl);
+    letter-spacing: -0.03em;
+    text-align: center;
+    margin-bottom: var(--space-6);
+    position: relative;
+    display: inline-block;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, var(--color-text) 0%, var(--color-primary) 50%, var(--color-secondary) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    background-size: 200% 200%;
+    animation: textGradient 3s ease infinite;
+}
+@keyframes textGradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+.trending h2::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 4px;
+    background: linear-gradient(90deg, transparent, var(--color-primary), var(--color-secondary), var(--color-primary), transparent);
+    border-radius: 2px;
+    animation: shimmer 2s ease infinite;
+}
+@keyframes shimmer {
+    0% { opacity: 0.5; }
+    50% { opacity: 1; }
+    100% { opacity: 0.5; }
+}
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-4);
+    padding: var(--space-2) 0;
+}
+.metric-card {
+    background: linear-gradient(145deg, var(--color-surface) 0%, color-mix(in srgb, var(--color-primary-light) 40%, var(--color-surface)) 100%);
+    border: 1px solid color-mix(in srgb, var(--color-border) 50%, transparent);
+    border-radius: var(--radius-xl);
+    padding: clamp(1.5rem, 4vw, 2.25rem);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 8px 25px rgba(37, 99, 235, 0.12);
+}
+.metric-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: conic-gradient(from 0deg at 50% 50%, color-mix(in srgb, var(--color-primary) 15%, transparent) 0deg, transparent 90deg, color-mix(in srgb, var(--color-secondary) 15%, transparent) 180deg, transparent 270deg, color-mix(in srgb, var(--color-primary) 15%, transparent) 360deg);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    animation: rotateBg 10s linear infinite;
+}
+@keyframes rotateBg {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+.metric-card:hover::before {
+    opacity: 1;
+}
+.metric-card::after {
+    content: '';
+    position: absolute;
+    inset: 3px;
+    background: linear-gradient(145deg, var(--color-surface) 0%, color-mix(in srgb, var(--color-primary-light) 40%, var(--color-surface)) 100%);
+    border-radius: calc(var(--radius-xl) - 3px);
+    z-index: 0;
+}
+.metric-card:hover {
+    transform: translateY(-10px) scale(1.03);
+    box-shadow: 0 25px 60px rgba(37, 99, 235, 0.25), 0 0 0 2px color-mix(in srgb, var(--color-primary) 40%, transparent);
+}
+.metric-card strong {
+    display: block;
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    line-height: 1;
+    letter-spacing: -0.03em;
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 50%, var(--color-primary) 100%);
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gradientFlow 3s ease infinite;
+    margin-bottom: 0.5rem;
+    position: relative;
+    z-index: 1;
+    text-shadow: 0 4px 20px rgba(37, 99, 235, 0.3);
+}
+@keyframes gradientFlow {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+.metric-card span {
+    color: var(--color-text-muted);
+    font-size: clamp(0.8rem, 1.8vw, 0.95rem);
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    position: relative;
+    z-index: 1;
+    background: linear-gradient(90deg, var(--color-text-muted), var(--color-text));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+.metric-card:nth-child(1) {
+    animation: fadeInUp 0.6s ease-out 0.1s both;
+}
+.metric-card:nth-child(2) {
+    animation: fadeInUp 0.6s ease-out 0.2s both;
+}
+.metric-card:nth-child(3) {
+    animation: fadeInUp 0.6s ease-out 0.3s both;
+}
+
+/* =========================================== */
+/* HOW TO VERIFY SECTION - FULL ENHANCEMENT */
+/* =========================================== */
+.guide {
+    margin-top: var(--space-10);
+    position: relative;
+}
+.guide h2 {
+    font-family: var(--font-display);
+    font-size: var(--text-xl);
+    letter-spacing: -0.03em;
+    text-align: center;
+    margin-bottom: var(--space-4);
+    position: relative;
+    display: inline-block;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, var(--color-text) 0%, var(--color-primary) 50%, var(--color-secondary) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    background-size: 200% 200%;
+    animation: textGradient 3s ease infinite;
+}
+.guide h2::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 4px;
+    background: linear-gradient(90deg, transparent, var(--color-primary), var(--color-secondary), var(--color-primary), transparent);
+    border-radius: 2px;
+    animation: shimmer 2s ease infinite;
+}
+.guide-intro {
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-6);
+    max-width: 65ch;
+    font-size: var(--text-base);
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.7;
+    position: relative;
+    padding: 0 var(--space-4);
+}
+.method-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-4);
+    padding: var(--space-2) 0;
+}
+.method-card {
+    background: linear-gradient(145deg, var(--color-surface) 0%, color-mix(in srgb, var(--color-bg) 50%, var(--color-surface)) 100%);
+    border: 1px solid color-mix(in srgb, var(--color-border) 50%, transparent);
+    border-radius: var(--radius-xl);
+    padding: clamp(1.5rem, 3.5vw, 2rem);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 8px 25px rgba(37, 99, 235, 0.12);
+}
+.method-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, color-mix(in srgb, var(--color-primary) 15%, transparent) 0%, transparent 40%, color-mix(in srgb, var(--color-secondary) 15%, transparent) 100%);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+.method-card:hover::before {
+    opacity: 1;
+}
+.method-card::after {
+    content: '';
+    position: absolute;
+    inset: 3px;
+    background: linear-gradient(145deg, var(--color-surface) 0%, color-mix(in srgb, var(--color-bg) 50%, var(--color-surface)) 100%);
+    border-radius: calc(var(--radius-xl) - 3px);
+    z-index: 0;
+}
+.method-card:hover {
+    transform: translateY(-12px) scale(1.04);
+    box-shadow: 0 30px 70px rgba(37, 99, 235, 0.3), 0 0 0 2px color-mix(in srgb, var(--color-primary) 40%, transparent);
+}
+.method-card small {
+    display: inline-flex;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+    color: var(--color-text-inverse);
+    font-weight: 800;
+    font-size: var(--text-xl);
+    margin-bottom: var(--space-3);
+    box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4), inset 0 2px 4px rgba(255,255,255,0.2);
+    position: relative;
+    z-index: 1;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.method-card::after + small,
+.method-card small {
+    z-index: 2;
+}
+.method-card:hover small {
+    transform: scale(1.2) rotate(15deg);
+    box-shadow: 0 12px 35px rgba(37, 99, 235, 0.5), inset 0 2px 4px rgba(255,255,255,0.3);
+}
+.method-card h3 {
+    font-size: clamp(1rem, 2.2vw, 1.2rem);
+    font-weight: 700;
+    margin-bottom: var(--space-2);
+    color: var(--color-text);
+    position: relative;
+    z-index: 1;
+}
+.method-card p {
+    color: var(--color-text-muted);
+    font-size: clamp(0.8rem, 1.8vw, 0.9rem);
+    line-height: 1.7;
+    position: relative;
+    z-index: 1;
+}
+.method-card:nth-child(1) {
+    animation: fadeInUp 0.6s ease-out 0.1s both;
+}
+.method-card:nth-child(2) {
+    animation: fadeInUp 0.6s ease-out 0.2s both;
+}
+.method-card:nth-child(3) {
+    animation: fadeInUp 0.6s ease-out 0.3s both;
+}
+.method-card:nth-child(4) {
+    animation: fadeInUp 0.6s ease-out 0.4s both;
+}
+
+
