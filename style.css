@@ -1096,3 +1096,321 @@ footer {
     }
 }
 }
+
+
+/* Camera Modal Overlay */
+.camera-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    z-index: 9999;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.camera-modal.active {
+    display: flex;
+}
+
+.camera-modal-content {
+    width: 90%;
+    max-width: 600px;
+    background: var(--color-bg);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+/* Camera Close Button */
+.camera-close {
+    position: absolute;
+    top: var(--space-3);
+    right: var(--space-3);
+    background: rgba(0, 0, 0, 0.5);
+    color: var(--color-text-inverse);
+    border: none;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    z-index: 10000;
+}
+
+.camera-close:hover {
+    background: rgba(255, 0, 0, 0.6);
+}
+
+/* Camera View */
+.camera-view {
+    position: relative;
+    background: #000;
+}
+
+#camera-feed {
+    width: 100%;
+    height: 350px;
+    object-fit: cover;
+    display: block;
+}
+
+/* Camera Overlay with Scan Frame */
+.camera-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.scan-frame {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 280px;
+    height: 180px;
+    border: 2px solid rgba(37, 99, 235, 0.8);
+    border-radius: var(--radius-md);
+    box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.5);
+}
+
+.scan-corner {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border-color: var(--color-primary);
+    border-style: solid;
+    border-width: 3px;
+}
+
+.scan-corner.top-left {
+    top: -2px;
+    left: -2px;
+    border-right: none;
+    border-bottom: none;
+}
+
+.scan-corner.top-right {
+    top: -2px;
+    right: -2px;
+    border-left: none;
+    border-bottom: none;
+}
+
+.scan-corner.bottom-left {
+    bottom: -2px;
+    left: -2px;
+    border-right: none;
+    border-top: none;
+}
+
+.scan-corner.bottom-right {
+    bottom: -2px;
+    right: -2px;
+    border-left: none;
+    border-top: none;
+}
+
+.scan-guide {
+    position: absolute;
+    bottom: var(--space-3);
+    left: 50%;
+    transform: translateX(-50%);
+    color: var(--color-text-inverse);
+    background: rgba(0, 0, 0, 0.6);
+    padding: var(--space-2) var(--space-3);
+    border-radius: var(--radius-full);
+    font-size: var(--text-sm);
+}
+
+/* Camera Controls */
+.camera-controls {
+    display: flex;
+    justify-content: center;
+    padding: var(--space-4);
+    background: var(--color-bg);
+}
+
+.capture-btn {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background: var(--color-primary);
+    border: 4px solid rgba(255, 255, 255, 0.3);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.capture-btn:hover {
+    transform: scale(1.1);
+    background: var(--color-primary-hover);
+}
+
+.capture-btn:active {
+    transform: scale(0.95);
+}
+
+.capture-icon {
+    width: 30px;
+    height: 30px;
+    fill: white;
+}
+
+/* Camera Steps */
+.camera-step {
+    display: none;
+}
+
+.camera-step.active {
+    display: block;
+}
+
+/* Preview Step */
+#captured-preview {
+    width: 100%;
+    max-height: 300px;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto;
+}
+
+/* Camera Step Container */
+.camera-view,
+.preview-container,
+.processing-container,
+.results-container {
+    padding: var(--space-4);
+}
+
+.preview-header,
+.processing-header,
+.results-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-4);
+    padding-bottom: var(--space-3);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.preview-actions,
+.processing-actions,
+.results-actions {
+    display: flex;
+    gap: var(--space-2);
+}
+
+/* Processing Step */
+.processing-spinner {
+    width: 50px;
+    height: 50px;
+    border: 4px solid var(--color-border);
+    border-top-color: var(--color-primary);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: var(--space-6) auto;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.processing-progress {
+    margin-top: var(--space-4);
+}
+
+.progress-bar {
+    height: 4px;
+    background: var(--color-border);
+    border-radius: var(--radius-full);
+    overflow: hidden;
+}
+
+.progress-bar-fill {
+    height: 100%;
+    background: var(--color-primary);
+    width: 0;
+    transition: width 0.3s ease;
+}
+
+/* Results Step */
+.verification-result {
+    margin-top: var(--space-4);
+    padding: var(--space-4);
+    background: var(--color-surface);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border);
+}
+
+.result-verdict {
+    font-size: var(--text-lg);
+    font-weight: 600;
+    margin-bottom: var(--space-2);
+}
+
+.result-verdict.true {
+    color: #16a34a;
+}
+
+.result-verdict.false {
+    color: #dc2626;
+}
+
+.result-verdict.uncertain {
+    color: #f59e0b;
+}
+
+.extracted-text-content {
+    background: var(--color-surface);
+    padding: var(--space-3);
+    border-radius: var(--radius-md);
+    margin-top: var(--space-2);
+    font-size: var(--text-sm);
+    line-height: 1.6;
+}
+
+/* Action Buttons */
+.retake-btn,
+.verify-btn,
+.new-scan-btn {
+    padding: var(--space-2) var(--space-4);
+    border-radius: var(--radius-md);
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.retake-btn {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    color: var(--color-text);
+}
+
+.retake-btn:hover {
+    background: var(--color-border);
+}
+
+.verify-btn {
+    background: var(--color-primary);
+    border: none;
+    color: var(--color-text-inverse);
+}
+
+.verify-btn:hover {
+    background: var(--color-primary-hover);
+}
