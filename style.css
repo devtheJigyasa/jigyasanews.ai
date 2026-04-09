@@ -80,7 +80,7 @@ body {
     font-size: var(--text-base);
     line-height: 1.6;
     color: var(--color-text);
-    background: linear-gradient(135deg, var(--color-primary-light) 0%, var(--color-bg) 100%);
+            background: linear-gradient(135deg, #1CB5E0 0%, #005bea 50%, #000851 100%);
 }
 
 a, button, textarea {
@@ -3616,9 +3616,7 @@ section h2::after {
 }
 
 /* Camera modal multi-color */
-.camera-modal {
-    background: rgba(15, 23, 42, 0.95);
-    border: 1px solid rgba(139, 92, 246, 0.2);
+[data-theme="dark"] { background: linear-gradient(135deg, #0a0f2c 0%, #1a1f4a 50%, #1CB5E0 100%);    border: 1px solid rgba(139, 92, 246, 0.2);
     box-shadow: 0 0 80px rgba(139, 92, 246, 0.2);
 }
 
