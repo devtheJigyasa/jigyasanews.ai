@@ -44,6 +44,7 @@
                 <div class="hero-actions">
                     <a class="btn btn-primary" href="#scanner">Start Scanning</a>
                     <a class="btn btn-ghost" href="#guide">Learn How</a>
+                                <button id="open-camera-btn" class="btn btn-ghost" type="button">Scan with Camera</button>
                 </div>
             </div>
             <div class="scanner" id="scanner">
@@ -146,6 +147,30 @@
         </div>
     </footer>
 
+            
+
+    <!-- Camera Scanner Modal -->
+    <div id="camera-modal">
+        <div class="camera-content">
+            <button id="camera-close" class="camera-close" aria-label="Close camera">&times;</button>
+            <div style="position: relative;">
+                <video id="camera-feed" autoplay playsinline></video>
+                <div id="scan-overlay">
+                    <div class="scan-line"></div>
+                </div>
+            </div>
+            <div class="camera-actions">
+                <button id="capture-scan-btn" class="btn btn-primary">Capture & Scan</button>
+            </div>
+            <div id="scan-result-area">
+                <p class="scan-extract">Extracted text:</p>
+                <p id="scanned-text"></p>
+                <div id="scan-extracted-result"></div>
+            </div>
+        </div>
+    </div>
+
+    <canvas id="camera-canvas" style="display: none;"></canvas>
     <script src="./script.js"></script>
 </body>
 </html>
