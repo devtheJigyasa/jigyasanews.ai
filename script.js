@@ -16,10 +16,9 @@ root.setAttribute('data-theme', theme);
 // Theme Toggle
 function renderThemeIcon(mode) {
     toggle.innerHTML = mode === 'dark'
-        ? '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42M21 12a9 9 0 11-9-9 9 9 0 019 9z"></path></svg>'
-        : '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"></circle><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"></path></svg>';
+        ? '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"></circle><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"></path></svg>'
+        : '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42M21 12a9 9 0 11-9-9 9 9 0 019 9z"></path></svg>';
 }
-
 renderThemeIcon(theme);
 
 toggle.addEventListener('click', () => {
@@ -34,7 +33,6 @@ if (input && count) {
         count.textContent = `${input.value.length} / 1000`;
     });
 }
-
 // Known Facts Database - Verified claims with sources
 const knownFacts = {
     'narendra modi': {
@@ -146,7 +144,6 @@ const knownFacts = {
         ]
     }
 };
-
 // Wikipedia API search for unknown claims
 async function searchWikipedia(query) {
     try {
@@ -154,11 +151,7 @@ async function searchWikipedia(query) {
         const response = await fetch(url);
         const data = await response.json();
         if (data.query && data.query.search && data.query.search.length > 0) {
-            return {
-                found: true,
-                title: data.query.search[0].title,
-                url: `https://en.wikipedia.org/wiki/${encodeURIComponent(data.query.search[0].title).replace(/%20/g, '_')}`
-            };
+            return { found: true, title: data.query.search[0].title, url: `https://en.wikipedia.org/wiki/${encodeURIComponent(data.query.search[0].title).replace(/%20/g, '_')}` };
         }
         return { found: false };
     } catch (e) {
@@ -170,30 +163,30 @@ async function searchWikipedia(query) {
 // Analyze claim - check known facts first, then Wikipedia
 function analyzeClaim(claim) {
     const text = claim.toLowerCase();
-    
+
     // Check known facts database
     for (const [keyword, fact] of Object.entries(knownFacts)) {
         if (text.includes(keyword)) {
             return { ...fact, claim: keyword };
         }
     }
-    
+
     // Keyword-based analysis for unknown claims
     const hoaxKeywords = ['hoax', 'fake', 'scam', 'conspiracy', 'unproven', 'disputed', 'misleading'];
     const trueKeywords = ['confirmed', 'verified', 'official', 'peer-reviewed', 'published', 'study shows'];
     const sensationalKeywords = ['shocking', 'you won\'t believe', 'secret', 'exposed', 'miracle cure', 'doctors hate'];
-    
+
     let hoaxScore = 0, trueScore = 0, sensationalScore = 0;
     hoaxKeywords.forEach(k => { if (text.includes(k)) hoaxScore++; });
     trueKeywords.forEach(k => { if (text.includes(k)) trueScore++; });
     sensationalKeywords.forEach(k => { if (text.includes(k)) sensationalScore++; });
-    
+
     if (sensationalScore >= 2) hoaxScore += 3;
-    
+
     const total = hoaxScore + trueScore + 1;
     const hoaxRatio = hoaxScore / total;
     const trueRatio = trueScore / total;
-    
+
     if (hoaxRatio > 0.5) {
         return {
             verdict: 'false',
@@ -206,7 +199,7 @@ function analyzeClaim(claim) {
             ]
         };
     }
-    
+
     if (trueRatio > 0.4) {
         return {
             verdict: 'true',
@@ -219,29 +212,16 @@ function analyzeClaim(claim) {
             ]
         };
     }
-    
+
     return { needsWikiSearch: true, claim, hoaxScore, trueScore };
 }
-
 // Render result as HTML
 function renderResult(result) {
     const verdictLabels = { true: 'Verified', false: 'Misleading', uncertain: 'Needs Research' };
     const verdictTexts = { true: 'This claim appears to be TRUE', false: 'This claim appears to be FALSE', uncertain: 'We could not verify this claim' };
     const verdictColors = { true: '#22c55e', false: '#ef4444', uncertain: '#f59e0b' };
-    
-    let html = `
-        <h3>${verdictTexts[result.verdict]}</h3>
-        <span class="status-badge ${result.verdict === 'true' ? 'verified' : 'pending'}">${verdictLabels[result.verdict]}</span>
-        <p>${result.explanation}</p>
-        <div class="confidence-bar">
-            <span>Confidence</span>
-            <span>${result.confidence}%</span>
-        </div>
-        <h4>Recommended Sources</h4>
-        <ul>
-            ${result.sources.map(s => `<li><a href="${s.url}" target="_blank" rel="noopener">${s.name}</a></li>`).join('')}
-        </ul>
-    `;
+
+    let html = `\n### ${verdictTexts[result.verdict]}\n\n ${verdictLabels[result.verdict]} \n\n${result.explanation}\n\n Confidence   ${result.confidence}% \n\n#### Recommended Sources\n\n${result.sources.map(s => `*   [${s.name}](${s.url})\n`).join('')}\n\n`;
     return html;
 }
 
@@ -252,7 +232,7 @@ function showLoading() {
         statusBadge.className = 'status-badge pending';
     }
     if (resultsContent) {
-        resultsContent.innerHTML = '<p>Analyzing your claim against verified sources...</p>';
+        resultsContent.innerHTML = '\nAnalyzing your claim against verified sources...\n';
         resultsSection?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 }
@@ -264,7 +244,7 @@ function showError(message) {
         statusBadge.className = 'status-badge pending';
     }
     if (resultsContent) {
-        resultsContent.innerHTML = `<h3>Analysis Failed</h3><p>${message}</p>`;
+        resultsContent.innerHTML = `\n### Analysis Failed\n\n${message}\n\n`;
     }
 }
 
@@ -278,7 +258,6 @@ function showResult(result) {
         resultsContent.innerHTML = renderResult(result);
     }
 }
-
 // Scan Button Handler
 if (scanBtn && input) {
     scanBtn.addEventListener('click', async () => {
@@ -289,38 +268,18 @@ if (scanBtn && input) {
             setTimeout(() => { input.style.borderColor = ''; }, 1500);
             return;
         }
-        
         scanBtn.disabled = true;
         const originalText = scanBtn.textContent;
         scanBtn.textContent = 'Analyzing...';
         showLoading();
-        
         try {
             const result = analyzeClaim(claim);
             if (result.needsWikiSearch) {
                 const wikiResult = await searchWikipedia(result.claim);
                 if (wikiResult.found) {
-                    showResult({
-                        verdict: 'uncertain',
-                        confidence: 55,
-                        explanation: `We found information about this topic on Wikipedia. Please read it to verify the details.`,
-                        sources: [
-                            { name: 'Wikipedia', url: wikiResult.url },
-                            { name: 'Snopes', url: 'https://www.snopes.com' },
-                            { name: 'FactCheck.org', url: 'https://www.factcheck.org' }
-                        ]
-                    });
+                    showResult({ verdict: 'uncertain', confidence: 55, explanation: `We found information about this topic on Wikipedia. Please read it to verify the details.`, sources: [{ name: 'Wikipedia', url: wikiResult.url }, { name: 'Snopes', url: 'https://www.snopes.com' }, { name: 'FactCheck.org', url: 'https://www.factcheck.org' }] });
                 } else {
-                    showResult({
-                        verdict: 'uncertain',
-                        confidence: 45,
-                        explanation: 'We could not find enough information to verify this claim.',
-                        sources: [
-                            { name: 'Snopes', url: 'https://www.snopes.com' },
-                            { name: 'FactCheck.org', url: 'https://www.factcheck.org' },
-                            { name: 'Reuters Fact Check', url: 'https://www.reuters.com/fact-check/' }
-                        ]
-                    });
+                    showResult({ verdict: 'uncertain', confidence: 45, explanation: 'We could not find enough information to verify this claim.', sources: [{ name: 'Snopes', url: 'https://www.snopes.com' }, { name: 'FactCheck.org', url: 'https://www.factcheck.org' }, { name: 'Reuters Fact Check', url: 'https://www.reuters.com/fact-check/' }] });
                 }
             } else {
                 showResult(result);
@@ -333,8 +292,7 @@ if (scanBtn && input) {
             scanBtn.textContent = originalText;
         }
     });
-    
-    // Keyboard shortcut: Ctrl+Enter to scan
+
     input.addEventListener('keydown', (e) => {
         if (e.ctrlKey && e.key === 'Enter') {
             e.preventDefault();
@@ -356,173 +314,162 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         }
     });
 });
-
 // ====================
 // CAMERA SCANNER JS
 // ====================
 
-// Camera scanner elements - initialized early
-let cameraStream = null;
-let videoElement = document.getElementById('camera-feed');
-let canvasElement = document.getElementById('camera-canvas');
-let scanInterval = null;
+// Current step in camera flow: 'camera' | 'preview' | 'processing' | 'results'
+let currentStep = 'camera';
 
-const openCameraBtn = document.getElementById('open-camera-btn');
+// Camera scanner elements
+let cameraStream = null;
+let videoElement = null;
+let canvasElement = null;
+const captureBtn = document.getElementById('capture-scan-btn');
+const retakeBtn = document.getElementById('retake-scan-btn');
+const verifyBtn = document.getElementById('verify-now-btn');
 const cameraModal = document.getElementById('camera-modal');
 const cameraClose = document.getElementById('camera-close');
-const cameraFeed = document.getElementById('camera-feed');
-const scanOverlay = document.getElementById('scan-overlay');
-const captureBtn = document.getElementById('capture-scan-btn');
-const scanResultArea = document.getElementById('scan-result-area');
+const cameraStepCamera = document.getElementById('step-camera');
+const cameraStepPreview = document.getElementById('step-preview');
+const cameraStepProcessing = document.getElementById('step-processing');
+const cameraStepResults = document.getElementById('step-results');
 const scannedTextEl = document.getElementById('scanned-text');
 const scanExtractedResult = document.getElementById('scan-extracted-result');
+const scanResultArea = document.getElementById('scan-result-area');
 
-// Open camera modal
-if (openCameraBtn) {
-    openCameraBtn.addEventListener('click', openCameraScanner);
+// Show specific step
+function showStep(stepName) {
+    if (cameraStepCamera) cameraStepCamera.style.display = stepName === 'camera' ? 'flex' : 'none';
+    if (cameraStepPreview) cameraStepPreview.style.display = stepName === 'preview' ? 'flex' : 'none';
+    if (cameraStepProcessing) cameraStepProcessing.style.display = stepName === 'processing' ? 'flex' : 'none';
+    if (cameraStepResults) cameraStepResults.style.display = stepName === 'results' ? 'flex' : 'none';
+    currentStep = stepName;
 }
 
-// Close camera modal
+// Open camera modal
+if (captureBtn) {
+    captureBtn.addEventListener('click', openCameraScanner);
+}
+
 if (cameraClose) {
     cameraClose.addEventListener('click', closeCameraScanner);
 }
 
 if (cameraModal) {
     cameraModal.addEventListener('click', (e) => {
-        if (e.target === cameraModal) {
-            closeCameraScanner();
-        }
+        if (e.target === cameraModal) closeCameraScanner();
     });
 }
 
 async function openCameraScanner() {
     if (!cameraModal) return;
     cameraModal.classList.add('active');
-    scanResultArea?.classList.remove('active');
-    
-    // Reset elements
+    showStep('camera');
     videoElement = document.getElementById('camera-feed');
     canvasElement = document.getElementById('camera-canvas');
-    
+
     if (!videoElement) {
         showError('Camera video element not found');
         return;
     }
-    
+
     try {
-        // Try back camera first, then front camera as fallback
-        cameraStream = await navigator.mediaDevices.getUserMedia({
-            video: { facingMode: 'environment' }
-        });
+        cameraStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
     } catch (err) {
         console.warn('Back camera not available, trying front camera:', err);
         try {
-            cameraStream = await navigator.mediaDevices.getUserMedia({
-                video: { facingMode: 'user' }
-            });
+            cameraStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user' } });
         } catch (err2) {
             console.error('Camera error:', err2);
             showError('Could not access camera. Please allow camera permission.');
             return;
         }
     }
-    
+
     videoElement.srcObject = cameraStream;
-    
-    // Wait for video to be ready before capturing
-    videoElement.onloadeddata = () => {
-        console.log('Camera stream loaded, ready to capture');
-    };
+    videoElement.onloadeddata = () => console.log('Camera stream loaded, ready to capture');
 }
 
 function closeCameraScanner() {
-    if (cameraModal) {
-        cameraModal.classList.remove('active');
-    }
+    if (cameraModal) cameraModal.classList.remove('active');
     if (cameraStream) {
         cameraStream.getTracks().forEach(track => track.stop());
         cameraStream = null;
     }
-    if (videoElement) {
-        videoElement.srcObject = null;
-    }
-    if (scanOverlay) {
-        scanOverlay.style.display = 'none';
-    }
+    if (videoElement) videoElement.srcObject = null;
 }
 
-async function captureAndScan() {
-    if (!videoElement || !canvasElement || !videoElement.srcObject) {
-        if (scanExtractedResult) {
-            scanExtractedResult.innerHTML = '<p>Camera is not ready. Please wait a moment.</p>';
-        }
-        return;
-    }
-    
-    // Show scan overlay animation
-    if (scanOverlay) {
-        scanOverlay.style.display = 'block';
-    }
-    
-    // Capture frame from video
-    canvasElement.width = videoElement.videoWidth || 640;
-    canvasElement.height = videoElement.videoHeight || 480;
-    const ctx = canvasElement.getContext('2d');
-    ctx.drawImage(videoElement, 0, 0, canvasElement.width, canvasElement.height);
-    
-    // Show loading
+// Capture button - go to preview step
+if (captureBtn) {
+    captureBtn.addEventListener('click', () => {
+        if (!videoElement || !canvasElement || !videoElement.srcObject) return;
+        const ctx = canvasElement.getContext('2d');
+        canvasElement.width = videoElement.videoWidth || 640;
+        canvasElement.height = videoElement.videoHeight || 480;
+        ctx.drawImage(videoElement, 0, 0, canvasElement.width, canvasElement.height);
+        const previewImage = document.getElementById('preview-image');
+        if (previewImage) previewImage.src = canvasElement.toDataURL('image/jpeg');
+        showStep('preview');
+    });
+}
+
+// Retake button - go back to camera step
+if (retakeBtn) {
+    retakeBtn.addEventListener('click', () => showStep('camera'));
+}
+
+// Verify/Scan button - go to processing, then results
+if (verifyBtn) {
+    verifyBtn.addEventListener('click', () => {
+        if (!canvasElement) return;
+        showStep('processing');
+        runOCRAndVerify();
+    });
+}
+
+async function runOCRAndVerify() {
     if (scanExtractedResult) {
         scanExtractedResult.classList.add('loading');
         scanExtractedResult.innerHTML = '<p>Extracting text from image...</p>';
     }
-    
-    // Use Tesseract to extract text
+
     try {
-        const result = await Tesseract.recognize(
-            canvasElement,
-            'eng',
-            { logger: m => console.log(m) }
-        );
-        
+        const result = await Tesseract.recognize(canvasElement, 'eng', { logger: m => console.log(m) });
         const extractedText = result.data.text.trim();
-        
+
         if (extractedText.length < 5) {
-            scanExtractedResult.innerHTML = '<p>No readable text found. Try again with clearer text.</p>';
-            scanExtractedResult.classList.remove('loading');
-            if (scanOverlay) scanOverlay.style.display = 'none';
+            if (scanExtractedResult) {
+                scanExtractedResult.innerHTML = '<p>No readable text found. Try again with clearer text.</p>';
+                scanExtractedResult.classList.remove('loading');
+            }
+            showStep('results');
             return;
         }
-        
-        // Show extracted text
-        if (scannedTextEl) {
-            scannedTextEl.textContent = extractedText;
-        }
+
+        if (scannedTextEl) scannedTextEl.textContent = extractedText;
         scanResultArea?.classList.add('active');
-        
-        // Now verify the extracted text using the real analyzeClaim function
         verifyClaim(extractedText);
-        
-        if (scanOverlay) scanOverlay.style.display = 'none';
-        
+        if (scanExtractedResult) scanExtractedResult.classList.remove('loading');
+        showStep('results');
+
     } catch (err) {
         console.error('OCR error:', err);
-        scanExtractedResult.innerHTML = '<p>Failed to extract text. Try again.</p>';
-        scanExtractedResult.classList.remove('loading');
-        if (scanOverlay) scanOverlay.style.display = 'none';
+        if (scanExtractedResult) {
+            scanExtractedResult.innerHTML = '<p>Failed to extract text. Try again.</p>';
+            scanExtractedResult.classList.remove('loading');
+        }
+        showStep('results');
     }
 }
 
 function verifyClaim(claim) {
-    // Use the REAL analyzeClaim function instead of generating random values
     const result = analyzeClaim(claim);
-    
     if (scanExtractedResult) {
-        const verdictIcon = result.verdict === 'true' ? '&#10004;' : result.verdict === 'false' ? '&#10006;' : '&#63;';
-        const verdictClass = result.verdict === 'true' ? 'verified' : result.verdict === 'false' ? 'false' : 'uncertain';
-        
-        scanExtractedResult.innerHTML = `
-            <h3>Analysis Result</h3>
-            <span class="status-badge ${verdictClass}">${result.verdict === 'true' ? 'Verified' : result.verdict === 'false' ? 'Misleading' : 'Uncertain'}</span>
+        scanExtractedResult.innerHTML = `<h3>Analysis Result</h3>
+            <span class="status-badge ${result.verdict === 'true' ? 'verified' : result.verdict === 'false' ? 'false' : 'uncertain'}">
+                ${result.verdict === 'true' ? 'Verified' : result.verdict === 'false' ? 'Misleading' : 'Uncertain'}
+            </span>
             <p>${result.explanation}</p>
             <div class="confidence-bar">
                 <span>Confidence</span>
@@ -531,18 +478,10 @@ function verifyClaim(claim) {
             <h4>Sources</h4>
             <ul>
                 ${result.sources.map(s => `<li><a href="${s.url}" target="_blank">${s.name}</a></li>`).join('')}
-            </ul>
-        `;
+            </ul>`;
         scanExtractedResult.classList.remove('loading');
     }
 }
 
-// Capture button handler
-if (captureBtn) {
-    captureBtn.addEventListener('click', captureAndScan);
-}
-
-// Export verifyClaim for use in camera modal
 window.verifyClaim = verifyClaim;
-
 console.log('Curious News initialized. Ready to verify claims.');
