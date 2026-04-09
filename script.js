@@ -496,4 +496,9 @@ if (captureBtn) {
 
 // Export for use in camera modal
 window.verifyClaim = verifyClaim;
+
+
+// Initialize video and canvas elements
+if (cameraFeed) videoElement = cameraFeed;
+if (document.getElementById('camera-canvas')) canvasElement = document.getElementById('camera-canvas');
 console.log('Curious News initialized. Ready to verify claims.');
