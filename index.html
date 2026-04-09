@@ -3,25 +3,22 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Curious News - AI-powered fact-checking and news verification platform for accurate news updates" />
+    <meta name="description" content="Curious News - AI-powered fact-checking and news verification platform for accurate news updates." />
     <meta name="keywords" content="news, AI, fact-check, verification, fake news, misinformation" />
     <meta name="author" content="Curious" />
     <title>Curious News | AI Fact-Checking Platform</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="./style.css" />
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='75' font-size='75' fill='%23d4af37' font-weight='bold'>?</text></svg>" />
-        <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
 </head>
-        
 <body>
     <a class="skip-link" href="#main">Skip to content</a>
-
     <header>
         <div class="container">
             <nav class="nav">
                 <a class="brand" href="#top" aria-label="Curious News home">
-                    <span class="brand-mark">?</span>
+                    <span class="brand-mark"></span>
                     <div>
                         <span class="brand-name">Curious</span>
                         <span class="brand-tag">News Verification</span>
@@ -34,103 +31,97 @@
                     <button class="theme-toggle" data-theme-toggle aria-label="Toggle dark mode"></button>
                 </div>
             </nav>
-
+        </div>
+    </header>
     <main id="main" class="container">
         <section class="hero">
             <div class="hero-copy">
-                <span class="eyebrow">AI-Powered Verification</span>
+                <span class="hero-eyebrow">AI-Powered Verification</span>
                 <h1>Ask Questions. Find Truth.</h1>
                 <p>Get real-time fact-checking and verification of news stories with advanced AI technology. Paste any claim, headline, or article snippet to get instant analysis.</p>
                 <div class="hero-actions">
                     <a class="btn btn-primary" href="#scanner">Start Scanning</a>
                     <a class="btn btn-ghost" href="#guide">Learn How</a>
-                                <button id="open-camera-btn" class="btn btn-ghost" type="button">Scan with Camera</button>
+                    <button id="open-camera-btn" class="btn btn-ghost camera-btn" type="button">Scan with Camera</button>
                 </div>
-            </div>
-            <div class="scanner" id="scanner">
-                <div class="scanner-header">
-                    <span class="counter">0 / 1000</span>
-                    <span class="scanner-label">Claim Scanner</span>
-                </div>
-                <textarea class="input" placeholder="Paste a claim, headline, or news snippet here to verify..." aria-label="Claim text" maxlength="1000"></textarea>
-                <button class="btn btn-primary btn-full" type="submit">Scan Claim</button>
-                <p class="hint">Press Ctrl+Enter to scan quickly</p>
             </div>
         </section>
-
-        <section class="results" id="verified" aria-live="polite">
-            <div class="section-head">
+        <div class="scanner" id="scanner">
+            <div class="scanner-header">
+                <h2>Claim Scanner</h2>
+                <div class="counter">0 / 1000</div>
+            </div>
+            <div class="scanner-input">
+                <textarea class="input" placeholder="Paste any claim, headline, or article snippet to verify..." maxlength="1000"></textarea>
+            </div>
+            <div class="scanner-actions">
+                <button class="btn btn-primary" type="submit">Scan Claim</button>
+            </div>
+            <p class="scanner-hint">Press Ctrl+Enter to scan quickly</p>
+        </div>
+        <section id="verified" class="results" hidden>
+            <div class="result-header">
                 <h2>Analysis Results</h2>
                 <span class="status-badge pending">Pending</span>
             </div>
             <div class="result-content">
-                <p class="placeholder">Your claim analysis will appear here.</p>
+                <p>Your claim analysis will appear here.</p>
             </div>
         </section>
-
-        <section class="trending" id="trending">
-            <div class="section-head">
-                <h2>Trending Now</h2>
-            </div>
+        <section id="trending" class="trending">
+            <h2>Trending Now</h2>
             <div class="stats-grid">
-                <div class="metric-card">
-                    <strong>12.5K</strong>
-                    <span>Claims Verified Today</span>
+                <div class="stat-card">
+                    <span class="stat-value">12.5K</span>
+                    <span class="stat-label">Claims Verified Today</span>
                 </div>
-                <div class="metric-card">
-                    <strong>98.2%</strong>
-                    <span>Accuracy Rate</span>
+                <div class="stat-card">
+                    <span class="stat-value">98.2%</span>
+                    <span class="stat-label">Accuracy Rate</span>
                 </div>
-                <div class="metric-card">
-                    <strong>45K+</strong>
-                    <span>Users Trust Curious</span>
+                <div class="stat-card">
+                    <span class="stat-value">45K+</span>
+                    <span class="stat-label">Users Trust Curious</span>
                 </div>
             </div>
         </section>
-
-        <section class="guide" id="guide">
-            <div class="section-head">
-                <h2>How We Verify</h2>
-                <p class="guide-intro">Our AI-powered verification process uses multiple signals to assess the credibility of any claim.</p>
-            </div>
-            <div class="method-grid">
-                <article class="method-card">
-                    <small>1</small>
+        <section id="guide" class="guide">
+            <h2>How We Verify</h2>
+            <p class="guide-intro">Our AI-powered verification process uses multiple signals to assess the credibility of any claim.</p>
+            <div class="steps-grid">
+                <div class="step">
+                    <span class="step-number">1</span>
                     <h3>Stop</h3>
                     <p>Pause before sharing. Ask yourself if the claim seems too shocking to be true.</p>
-                </article>
-                <article class="method-card">
-                    <small>2</small>
+                </div>
+                <div class="step">
+                    <span class="step-number">2</span>
                     <h3>Investigate</h3>
                     <p>Check the source. Is it a reputable outlet with editorial standards?</p>
-                </article>
-                <article class="method-card">
-                    <small>3</small>
+                </div>
+                <div class="step">
+                    <span class="step-number">3</span>
                     <h3>Find</h3>
                     <p>Search for other coverage. Are multiple credible sources reporting the same?</p>
-                </article>
-                <article class="method-card">
-                    <small>4</small>
+                </div>
+                <div class="step">
+                    <span class="step-number">4</span>
                     <h3>Trace</h3>
                     <p>Go back to the original source. Has the claim been taken out of context?</p>
-                </article>
+                </div>
             </div>
         </section>
-
-        <section class="about" id="about">
-            <div class="section-head">
-                <h2>About Curious</h2>
-            </div>
+        <section id="about" class="about">
+            <h2>About Curious</h2>
             <p class="about-intro">Curious is an AI-powered platform dedicated to combating misinformation and promoting media literacy. We use advanced machine learning algorithms to verify news stories and provide users with accurate, trustworthy information.</p>
-            <p>Our mission is to create a more informed society where people can trust the information they consume.</p>
+            <p class="about-intro">Our mission is to create a more informed society where people can trust the information they consume.</p>
         </section>
     </main>
-
     <footer>
         <div class="container">
             <div class="footer-content">
                 <div class="footer-brand">
-                    <span class="brand-mark">?</span>
+                    <span class="brand-mark"></span>
                     <div>
                         <span class="brand-name">Curious</span>
                         <span class="brand-tag">News Verification</span>
@@ -146,33 +137,78 @@
             <p class="footer-note">© 2024 Curious News. All rights reserved. | Made with ❤️ for a truthful world</p>
         </div>
     </footer>
-
-            
-
     <!-- Camera Scanner Modal -->
-    <div id="camera-modal">
-        <div class="camera-content">
+    <div id="camera-modal" class="camera-modal">
+        <div class="camera-modal-content">
             <button id="camera-close" class="camera-close" aria-label="Close camera">&times;</button>
-            <div style="position: relative;">
-                <video id="camera-feed" autoplay playsinline></video>
-                <div id="scan-overlay">
-                    <div class="scan-line"></div>
+            
+            <!-- STEP 1: Camera View -->
+            <div id="camera-step" class="camera-step active">
+                <div class="camera-view">
+                    <video id="camera-feed" autoplay playsinline muted></video>
+                    <div class="camera-overlay">
+                        <div class="scan-frame">
+                            <div class="scan-corner top-left"></div>
+                            <div class="scan-corner top-right"></div>
+                            <div class="scan-corner bottom-left"></div>
+                            <div class="scan-corner bottom-right"></div>
+                        </div>
+                        <p class="scan-guide">Point camera at text to scan</p>
+                    </div>
+                </div>
+                <div class="camera-controls">
+                    <button id="capture-btn" class="capture-btn" type="button">
+                        <span class="capture-icon"></span>
+                    </button>
                 </div>
             </div>
-            <div class="camera-actions">
-                <button id="capture-scan-btn" class="btn btn-primary">Capture & Scan</button>
+            
+            <!-- STEP 2: Preview -->
+            <div id="preview-step" class="camera-step">
+                <div class="preview-container">
+                    <img id="captured-preview" alt="Captured image preview">
+                </div>
+                <div class="preview-actions">
+                    <button id="retake-btn" class="btn btn-ghost" type="button">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"/><path d="M16 21h5v-5"/></svg>
+                        Retake
+                    </button>
+                    <button id="verify-btn" class="btn btn-primary" type="button">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                        Verify Now
+                    </button>
+                </div>
             </div>
-            <div id="scan-result-area">
-                <p class="scan-extract">Extracted text:</p>
-                <p id="scanned-text"></p>
-                <div id="scan-extracted-result"></div>
+            
+            <!-- STEP 3: Processing -->
+            <div id="processing-step" class="camera-step">
+                <div class="processing-container">
+                    <div class="processing-spinner"></div>
+                    <h3>Scanning text...</h3>
+                    <p id="processing-status">Extracting text from image</p>
+                    <div class="processing-progress">
+                        <div class="progress-bar" id="progress-bar"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- STEP 4: Results -->
+            <div id="results-step" class="camera-step">
+                <div class="results-container">
+                    <div class="results-header">
+                        <h3>Analysis Result</h3>
+                        <button id="new-scan-btn" class="btn btn-ghost btn-sm" type="button">New Scan</button>
+                    </div>
+                    <div class="extracted-text">
+                        <h4>Extracted Text</h4>
+                        <p id="scanned-text" class="extracted-text-content"></p>
+                    </div>
+                    <div id="scan-extracted-result" class="verification-result"></div>
+                </div>
             </div>
         </div>
+        <canvas id="camera-canvas" style="display: none;"></canvas>
     </div>
-
-    <canvas id="camera-canvas" style="display: none;"></canvas>
     <script src="./script.js"></script>
 </body>
 </html>
-        </div>
-    </header>
