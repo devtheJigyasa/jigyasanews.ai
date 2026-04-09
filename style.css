@@ -923,4 +923,176 @@ footer {
         transition: none !important;
         scroll-behavior: auto !important;
     }
+    
+/* ==================== */
+/* CAMERA SCANNER CSS   */
+/* ==================== */
+
+#camera-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.85);
+    z-index: 10000;
+    align-items: center;
+    justify-content: center;
+}
+
+#camera-modal.active {
+    display: flex;
+}
+
+.camera-content {
+    background: var(--color-surface);
+    border-radius: var(--radius-xl);
+    width: 90%;
+    max-width: 500px;
+    padding: 1.5rem;
+    position: relative;
+}
+
+.camera-close {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: var(--color-text-muted);
+    cursor: pointer;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+.camera-close:hover {
+    background: var(--color-bg);
+}
+
+#camera-feed {
+    width: 100%;
+    border-radius: var(--radius-lg);
+    background: #000;
+    min-height: 300px;
+    object-fit: cover;
+}
+
+#scan-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 3px solid var(--color-primary);
+    border-radius: var(--radius-lg);
+    pointer-events: none;
+}
+
+.scan-line {
+    position: absolute;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--color-primary), transparent);
+    animation: scanMove 2s ease-in-out infinite;
+}
+
+@keyframes scanMove {
+    0%, 100% { top: 0; }
+    50% { top: 100%; }
+}
+
+.camera-actions {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 1rem;
+}
+
+.camera-actions .btn {
+    flex: 1;
+}
+
+#scan-result-area {
+    margin-top: 1rem;
+    padding: 1rem;
+    background: var(--color-bg);
+    border-radius: var(--radius-md);
+    display: none;
+}
+
+#scan-result-area.active {
+    display: block;
+}
+
+.scan-extract {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    margin-bottom: 0.5rem;
+}
+
+#scanned-text {
+    font-weight: 500;
+    margin-bottom: 0.75rem;
+}
+    
+#scan-extracted-result {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: 1rem;
+    margin-top: 0.5rem;
+}
+
+#scan-extracted-result.loading {
+    opacity: 0.6;
+}
+
+#scan-extracted-result .result-card {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+#scan-extracted-result .result-icon {
+    font-size: 1.25rem;
+}
+
+#scan-extracted-result .result-verdict {
+    font-weight: 600;
+    font-size: 0.875rem;
+}
+
+#scan-extracted-result .result-verdict.true {
+    color: #16a34a;
+}
+
+#scan-extracted-result .result-verdict.false {
+    color: #dc2626;
+}
+
+#scan-extracted-result .result-verdict.uncertain {
+    color: #f59e0b;
+}
+
+#scan-extracted-result .result-explanation {
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+    line-height: 1.5;
+}
+
+@media (max-width: 480px) {
+    .camera-content {
+        width: 95%;
+        padding: 1rem;
+    }
+    #camera-feed {
+        min-height: 200px;
+    }
+}
 }
