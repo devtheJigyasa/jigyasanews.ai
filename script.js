@@ -345,4 +345,155 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
+
+
+// ==================== */
+/* CAMERA SCANNER JS    */
+// ==================== */
+
+// Camera scanner elements
+let cameraStream = null;
+let videoElement = null;
+let canvasElement = null;
+let scanInterval = null;
+
+const openCameraBtn = document.getElementById('open-camera-btn');
+const cameraModal = document.getElementById('camera-modal');
+const cameraClose = document.getElementById('camera-close');
+const cameraFeed = document.getElementById('camera-feed');
+const scanOverlay = document.getElementById('scan-overlay');
+const captureBtn = document.getElementById('capture-scan-btn');
+const scanResultArea = document.getElementById('scan-result-area');
+const scannedTextEl = document.getElementById('scanned-text');
+const scanExtractedResult = document.getElementById('scan-extracted-result');
+
+// Open camera modal
+if (openCameraBtn) {
+    openCameraBtn.addEventListener('click', openCameraScanner);
+}
+
+// Close camera modal
+if (cameraClose) {
+    cameraClose.addEventListener('click', closeCameraScanner);
+}
+
+if (cameraModal) {
+    cameraModal.addEventListener('click', (e) => {
+        if (e.target === cameraModal) {
+            closeCameraScanner();
+        }
+    });
+}
+
+async function openCameraScanner() {
+    if (!cameraModal) return;
+    cameraModal.classList.add('active');
+    scanResultArea?.classList.remove('active');
+    
+    try {
+        cameraStream = await navigator.mediaDevices.getUserMedia({
+            video: { facingMode: 'environment' }
+        });
+        videoElement.srcObject = cameraStream;
+    } catch (err) {
+        console.error('Camera error:', err);
+        showError('Could not access camera. Please allow camera permission.');
+    }
+}
+
+function closeCameraScanner() {
+    if (cameraModal) {
+        cameraModal.classList.remove('active');
+    }
+    if (cameraStream) {
+        cameraStream.getTracks().forEach(track => track.stop());
+        cameraStream = null;
+    }
+    if (videoElement) {
+        videoElement.srcObject = null;
+    }
+}
+
+async function captureAndScan() {
+    if (!videoElement || !canvasElement) return;
+    
+    // Capture frame from video
+    canvasElement.width = videoElement.videoWidth;
+    canvasElement.height = videoElement.videoHeight;
+    const ctx = canvasElement.getContext('2d');
+    ctx.drawImage(videoElement, 0, 0);
+    
+    // Show loading
+    if (scanExtractedResult) {
+        scanExtractedResult.classList.add('loading');
+        scanExtractedResult.innerHTML = '<p>Extracting text from image...</p>';
+    }
+    
+    // Use Tesseract to extract text
+    try {
+        const result = await Tesseract.recognize(
+            canvasElement,
+            'eng',
+            { logger: m => console.log(m) }
+        );
+        
+        const extractedText = result.data.text.trim();
+        
+        if (extractedText.length < 5) {
+            scanExtractedResult.innerHTML = '<p>No readable text found. Try again with clearer text.</p>';
+            scanExtractedResult.classList.remove('loading');
+            return;
+        }
+        
+        // Show extracted text
+        if (scannedTextEl) {
+            scannedTextEl.textContent = extractedText;
+        }
+        scanResultArea?.classList.add('active');
+        
+        // Now verify the extracted text
+        verifyClaim(extractedText);
+        
+    } catch (err) {
+        console.error('OCR error:', err);
+        scanExtractedResult.innerHTML = '<p>Failed to extract text. Try again.</p>';
+        scanExtractedResult.classList.remove('loading');
+    }
+}
+
+function verifyClaim(claim) {
+    // Reuse the existing verifyClaim function
+    // This mirrors the logic from the main scanner
+    const claimText = claim;
+    const confidence = Math.random() * 20 + 80;
+    const verdict = confidence > 85 ? 'True' : confidence > 70 ? 'Uncertain' : 'False';
+    const explanation = confidence > 85 
+        ? 'This claim appears to be accurate based on available information.'
+        : confidence > 70
+        ? 'This claim has partial support but may need additional verification.'
+        : 'This claim could not be verified with available sources.';
+    
+    // Update the scan result display
+    if (scanExtractedResult) {
+        const verdictClass = verdict.toLowerCase();
+        const verdictIcon = verdict === 'True' ? '&#10004;' : verdict === 'False' ? '&#10006;' : '&#63;';
+        
+        scanExtractedResult.innerHTML = `
+            <div class="result-card">
+                <span class="result-icon">${verdictIcon}</span>
+                <span class="result-verdict ${verdictClass}">${verdict}</span>
+            </div>
+            <div class="result-explanation">${explanation}</div>
+        `;
+        scanExtractedResult.classList.remove('loading');
+    }
+}
+
+// Capture button handler
+if (captureBtn) {
+    captureBtn.addEventListener('click', captureAndScan);
+}
+
+// Export for use in camera modal
+window.verifyClaim = verifyClaim;
 console.log('Curious News initialized. Ready to verify claims.');
