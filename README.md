@@ -8,116 +8,126 @@
 <p align="center"><strong>Intelligence That Verifies.</strong></p>
 
 <p align="center">
-  Arixion AI is a verification-first AI engine that filters digital noise through layered analysis to surface trustworthy, verifiable insights.
+  A verification-first AI experience designed to filter digital noise, analyze claims,
+  and surface more trustworthy, verifiable insight.
 </p>
 
 ---
 
-## What is Arixion AI?
+## Overview
 
 Arixion AI is built for a digital world flooded with fast, noisy, and often misleading information.
 
-Instead of simply generating answers, Arixion AI focuses on **verification first**. It is designed to analyze claims, filter weak or untrustworthy signals, and help users move closer to information they can actually trust.
+Instead of focusing only on answer generation, Arixion AI starts with **verification first**. It is designed to inspect claims, filter weak signals, and guide users toward information they can trust more confidently.
 
-The core idea is simple:
-
-**Noise in → analysis and filtering → verifiable insight out.**
+**Core idea:**  
+**Noise in → analysis and filtering → verifiable insight out**
 
 ---
 
-## Why it matters
+## Why Arixion AI
 
-Modern information systems optimize for speed, virality, and engagement. Truth is often buried under repetition, bias, and low-quality sources.
+Modern information systems are optimized for speed, virality, and engagement. In that environment, truth is often buried under repetition, bias, and low-quality sources. [page:52]
 
-Arixion AI aims to reverse that flow by making verification the starting point, not an afterthought.
+Arixion AI aims to reverse that flow by making verification the starting point rather than an afterthought. Its product direction is built around trust, clarity, and credibility. [page:52]
 
 It is designed for people who want:
 - More signal, less noise
 - Clearer reasoning behind outputs
-- Trustworthy, verification-oriented AI experiences
-- A product philosophy built around truth filtering, not hype
+- Trust-oriented AI workflows
+- A product philosophy built around verification, not hype
 
 ---
 
-## Core features
+## Core Features
 
 - Verification-first AI workflow
 - Layered filtering and analysis pipeline
 - Claim-focused reasoning
 - Trust-oriented output design
 - SIFT-style verification guidance
-- Clean, modern interface for research and scanning workflows
+- Clean interface for scanning and research workflows
 - Foundation for future source-checking and credibility systems
 
 ---
 
-## Product philosophy
+## Current Product Direction
+
+The current Arixion AI project is positioned as a verification-first product with a structured interface for scanning claims, guiding user verification behavior, and building a more trustworthy AI experience. The repository README and project presentation both reflect that verification-centered positioning. [page:52]
+
+This makes Arixion AI closer to a trust-and-credibility layer for information than a generic chatbot product. [page:52]
+
+---
+
+## Product Philosophy
 
 Arixion AI is not just another AI assistant.
 
-It is a product built on the belief that the future of intelligence depends on **credibility, transparency, and verification**.
-
-Its brand promise is captured in one line:
+It is built on the belief that the future of intelligence depends on **credibility, transparency, and verification**.
 
 > **Intelligence That Verifies.**
 
 ---
 
-## Brand system
+## Brand System
 
-### Brand name
+### Brand Name
 **Arixion AI**
 
-### Former name
-**JigyasaNews.AI**
+### Former Name
+**JigyasaNews.AI** [page:52]
 
 ### Tagline
-**Intelligence That Verifies.**
+**Intelligence That Verifies.** [page:52]
 
-### One-line description
-Arixion AI is a verification-first AI engine that filters digital noise through layered analysis to surface trustworthy, verifiable insights.
+### One-Line Description
+Arixion AI is a verification-first AI engine that filters digital noise through layered analysis to surface trustworthy, verifiable insights. [page:52]
 
 ---
 
-## Visual identity
+## Visual Identity
 
-### Logo direction
-The logo is designed around:
-- A **magnifying glass** to represent investigation and scrutiny
-- A **layered funnel structure** to represent analysis, filtering, and refinement
-- A minimal, geometric form suited for startup, SaaS, and AI product use
+### Logo Direction
+The visual direction is based on:
+- A **magnifying glass** for investigation and scrutiny
+- A **layered funnel structure** for analysis, filtering, and refinement
+- A minimal geometric form suited to startup, SaaS, and AI product branding [page:52]
 
-### Color palette
-- **Primary:** `#2563EB` — trust, intelligence, signal
-- **Accent:** `#10B981` — verified, truth, confidence
-- **Background:** `#0F172A` — deep slate for product UI and landing pages
-- **Text primary:** `#E5E7EB`
-- **Muted text:** `#9CA3AF`
-- **Borders / lines:** `#1F2937`
+### Color Palette
+- **Primary:** `#2563EB` — trust, intelligence, signal [page:52]
+- **Accent:** `#10B981` — verified, truth, confidence [page:52]
+- **Background:** `#0F172A` — deep slate for product UI and landing pages [page:52]
+- **Text Primary:** `#E5E7EB` [page:52]
+- **Muted Text:** `#9CA3AF` [page:52]
+- **Borders / Lines:** `#1F2937` [page:52]
 
 ### Typography
-- **Headings / logo:** Inter or Poppins, semibold to bold
-- **Body:** Inter regular
+- **Headings / Logo:** Inter or Poppins, semibold to bold [page:52]
+- **Body:** Inter regular [page:52]
 
 ---
 
-## Getting started
+## Getting Started
 
-### Clone the repository
+### Clone the Repository
+
 ```bash
 git clone https://github.com/JigyasaQuest/arixion-ai.git
 cd arixion-ai
 ```
 
-### Open the project
-If this project is currently built as a static front-end experience, open the main HTML file in your browser or run it with your preferred local dev server.
+### Run Locally
+
+If the project is currently built as a static front-end experience, open the main HTML file directly in your browser or serve it locally with a simple development server. [page:52]
 
 Example:
+
 ```bash
 python -m http.server 8000
 ```
 
 Then visit:
+
 ```bash
 http://localhost:8000
 ```
@@ -132,20 +142,20 @@ Planned direction for Arixion AI includes:
 - Better reasoning visibility for outputs
 - Expanded scanning and extraction flows
 - Verification dashboards and research interfaces
-- Trust layers for fast-moving digital information
+- Trust layers for fast-moving digital information [page:52]
 
 ---
 
 ## Contributing
 
-Contributions are welcome if they align with the project’s verification-first vision.
+Contributions are welcome if they align with the project’s verification-first vision. The repository is active on GitHub and includes the standard collaboration tabs for code, issues, pull requests, actions, wiki, and project management. [page:52]
 
 You can contribute by:
-- Improving UI/UX
+- Improving UI and UX
 - Refining verification workflows
 - Strengthening front-end architecture
 - Improving performance and accessibility
-- Proposing features that increase trust, clarity, and product usefulness
+- Proposing features that increase trust, clarity, and usefulness
 
 To contribute:
 1. Fork the repository
@@ -157,10 +167,10 @@ To contribute:
 
 ## License
 
-This project is licensed under the **MIT License**.
+This project is licensed under the **MIT License**. [page:52]
 
 ---
 
-## Short description
+## Short Description
 
 **Arixion AI — Intelligence That Verifies. A verification-first AI engine that filters digital noise into trustworthy, verifiable insights.**
