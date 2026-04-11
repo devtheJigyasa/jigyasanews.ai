@@ -1,55 +1,61 @@
-# Curious News
+# Arixion AI
 
-**AI-Powered Fact-Checking and News Verification Tool**
+Verify the Truth in a Digital Age.
 
-Verify claims, detect misinformation, and learn to separate fact from fiction. Curious News is a production-ready static web application built for academic research and educational purposes.
+**Intelligence That Verifies.**
+
+Arixion AI is a verification-first AI that analyzes and filters information so you see only trustworthy, verifiable insights.
+
+> Formerly: JigyasaNews.AI / Curious News
+
+---
 
 ## Features
 
-- **Claim Scanner** - Paste any headline, article snippet, or claim to get AI-powered analysis
-- **Verdict Results** - Get clear TRUE, FALSE, or UNCERTAIN verdicts with confidence scores
-- **Source Recommendations** - Links to trusted fact-checking sources for further verification
-- **Dark/Light Mode** - Theme toggle with system preference detection
-- **Responsive Design** - Works on desktop, tablet, and mobile devices
-- **SIFT Guide** - Learn the Stop, Investigate, Find, Trace methodology
-- **Keyboard Shortcuts** - Press Ctrl+Enter to scan claims quickly
-- **Zero Data Storage** - No data is stored; 100% private
+- **Claim Scanner** – Paste any headline, article snippet, or claim to get AI-powered analysis.
+- **Verdict Results** – Clear TRUE, FALSE, or UNCERTAIN verdicts with confidence scores.
+- **Source Recommendations** – Links to trusted fact-checking sources for further verification.
+- **SIFT Guide** – Built-in Stop, Investigate, Find, Trace methodology to teach healthy skepticism.
+- **Dark/Light Mode** – Theme toggle with system preference detection.
+- **Responsive UI** – Works on desktop, tablet, and mobile.
+- **Zero Data Storage** – No claim data is stored; everything runs client-side.
+
+---
+
+## Brand & UI System
+
+- **Primary color**: `#2563EB` (trust blue)
+- **Accent color**: `#10B981` (verified green)
+- **Background**: `#0F172A` (dark slate)
+- **Font**: Inter or Poppins for headings; Inter for body.
+
+**Logo concept**: A magnifying glass integrated with a layered funnel icon, representing analysis → filtering → verified truth (minimal, flat, tech/startup style).
+
+---
 
 ## Tech Stack
 
-- **HTML5** - Semantic, accessible markup
-- **CSS3** - Custom properties, modern layout, responsive breakpoints
-- **JavaScript (ES6+)** - Vanilla JS, no frameworks or dependencies
-- **GitHub Pages** - Free static hosting
+- **HTML5** – Semantic, accessible markup.
+- **CSS3** – Modern layout, responsive breakpoints.
+- **JavaScript (ES6+) –** Vanilla JS, no frameworks.
+- **GitHub Pages** – Free static hosting.
+
+---
 
 ## Live Demo
 
-Visit: https://devtheJigyasa.github.io/jigyasanews.ai/
+(coming soon) `https://devtheJigyasa.github.io/arixion-ai/`
 
-## How It Works
+---
 
-1. **Paste a claim** - Enter any news headline, social media post, or article snippet
-2. **Click Scan** - The AI analyzes the claim against trusted sources
-3. **Get Results** - View the verdict with confidence score and supporting evidence
-4. **Verify Sources** - Check linked sources for additional context
+## Roadmap
 
-## SIFT Methodology
+- Deeper multi-source cross-checking.
+- Browser extension for in-page claim scanning.
+- Exportable verification reports.
 
-Curious News follows the SIFT method developed by Mike Caulfield:
-
-- **Stop** - Pause before sharing. Is the claim too shocking?
-- **Investigate** - Check the source. Is it reputable?
-- **Find** - Search for other coverage. Do multiple sources agree?
-- **Trace** - Go back to the original source. Has context been removed?
-
-## Responsive Design
-
-The site is fully responsive with optimized layouts for:
-- **Desktop** (900px+) - Full two-column hero, 4-column method grid
-- **Tablet** (600px-900px) - Stacked hero, 2-column grids
-- **Mobile** (400px-600px) - Centered single-column layout, touch-friendly buttons
-- **Small Mobile** (<400px) - Compact layout with reduced padding
+---
 
 ## License
 
-MIT License - Feel free to use for educational purposes.
+MIT License – Free to use for educational and research purposes.
