@@ -1,325 +1,458 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta
-    name="description"
-    content="Arixion AI — Intelligence That Verifies. A verification-first AI engine that filters digital noise into trustworthy, verifiable insights."
-  />
-  <meta
-    name="keywords"
-    content="Arixion AI, fact-check, verification, fake news, misinformation, news verification"
-  />
-  <meta name="author" content="Arixion AI" />
-  <title>Arixion AI — Intelligence That Verifies.</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Arixion AI — Intelligence That Verifies</title>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
-    rel="stylesheet"
-  />
-  <link rel="stylesheet" href="./style.css" />
-  <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
-</head>
-<body>
-  <a class="skip-link" href="#main">Skip to content</a>
+    <meta
+      name="description"
+      content="Arixion AI is a verification-first AI interface that helps people evaluate claims, reduce misinformation, and build a verify-first habit."
+    />
+    <meta
+      name="keywords"
+      content="Arixion AI, fact-check, verification, misinformation, fake news, claim checker, news verification"
+    />
+    <meta name="author" content="Arixion AI" />
+    <meta name="theme-color" content="#06101c" />
 
-  <header id="top">
-    <div class="container">
-      <nav class="nav">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+
+    <header class="site-header" id="top">
+      <div class="container nav-shell">
         <a class="brand" href="#top" aria-label="Arixion AI home">
-          <span class="brand-mark" aria-hidden="true"></span>
-          <div>
-            <span class="brand-name">Arixion AI</span>
-            <span class="brand-tag">Intelligence That Verifies.</span>
-          </div>
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 40 40" role="img" aria-hidden="true">
+              <defs>
+                <linearGradient id="brandGradient" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="#60a5fa" />
+                  <stop offset="100%" stop-color="#10b981" />
+                </linearGradient>
+              </defs>
+              <rect
+                x="4"
+                y="4"
+                width="32"
+                height="32"
+                rx="11"
+                fill="url(#brandGradient)"
+                opacity="0.18"
+              ></rect>
+              <path
+                d="M20 8 31 14.5V25.5L20 32 9 25.5V14.5L20 8Z"
+                fill="none"
+                stroke="url(#brandGradient)"
+                stroke-width="2.4"
+              ></path>
+              <path
+                d="M20 13.2 26 16.7V23.3L20 26.8 14 23.3V16.7L20 13.2Z"
+                fill="url(#brandGradient)"
+                opacity="0.9"
+              ></path>
+            </svg>
+          </span>
+
+          <span class="brand-text">
+            <strong>Arixion AI</strong>
+            <small>Verification-first intelligence</small>
+          </span>
         </a>
+
+        <nav class="top-nav" aria-label="Primary">
+          <a href="#scanner">Scanner</a>
+          <a href="#results">Results</a>
+          <a href="#method">Method</a>
+          <a href="#about">About</a>
+        </nav>
+
         <div class="nav-actions">
-          <a class="ghost-link" href="#trending">Trending</a>
-          <a class="ghost-link" href="#verified">Results</a>
-          <a class="ghost-link" href="#about">About</a>
+          <span class="version-pill" aria-label="Current version">v2.1 Camera OCR</span>
           <button
-            class="theme-toggle"
+            class="icon-button"
+            type="button"
             data-theme-toggle
-            type="button"
-            aria-label="Toggle dark mode"
-          ></button>
-        </div>
-      </nav>
-    </div>
-  </header>
-
-  <main id="main" class="container">
-    <!-- Hero -->
-    <section class="hero">
-      <div class="hero-copy">
-        <span class="hero-eyebrow">Verification-first AI</span>
-        <h1>Filter digital noise into verifiable truth.</h1>
-        <p>
-          Paste any claim, headline, or snippet and Arixion AI runs a layered verification
-          pipeline to help you move from confusion to clarity before you share.
-        </p>
-        <div class="hero-actions">
-          <a class="btn btn-primary" href="#scanner">Start Scanning</a>
-          <a class="btn btn-ghost" href="#guide">See How It Works</a>
-          <button
-            id="open-camera-btn"
-            class="btn btn-ghost camera-btn"
-            type="button"
+            aria-label="Switch theme"
           >
-            Scan with Camera
+            <span class="theme-icon theme-icon-sun" aria-hidden="true">☀</span>
+            <span class="theme-icon theme-icon-moon" aria-hidden="true">☾</span>
           </button>
+          <a class="button button-ghost desktop-only" href="#scanner">
+            Try scanner
+          </a>
         </div>
       </div>
-    </section>
+    </header>
 
-    <!-- Text Claim Scanner -->
-    <section class="scanner" id="scanner" aria-labelledby="scanner-heading">
-      <div class="scanner-header">
-        <h2 id="scanner-heading">Claim Scanner</h2>
-        <div class="counter" aria-label="Character count">
-          0 / 1000
+    <main id="main-content">
+      <section class="hero-section" aria-labelledby="hero-heading">
+        <div class="container hero-grid">
+          <div class="hero-copy surface-card reveal">
+            <span class="eyebrow">Misinformation defense layer</span>
+            <h1 id="hero-heading">
+              Filter digital noise into verifiable truth.
+            </h1>
+            <p class="hero-text">
+              Paste any claim, headline, or snippet and Arixion AI runs a layered
+              verification workflow designed to slow reaction, test source quality,
+              and surface better next steps before you share.
+            </p>
+
+            <div class="hero-actions">
+              <a class="button button-primary" href="#scanner">Scan a claim</a>
+              <button
+                class="button button-ghost"
+                type="button"
+                id="focus-input-btn"
+              >
+                Try a sample claim
+              </button>
+              <button
+                class="button button-ghost camera-btn"
+                type="button"
+                id="open-camera-btn"
+              >
+                Scan with camera
+              </button>
+            </div>
+
+            <div class="hero-meta-grid" aria-label="Current telemetry">
+              <article class="mini-stat">
+                <strong>12.5K</strong>
+                <span>Claims reviewed today</span>
+              </article>
+              <article class="mini-stat">
+                <strong>98.2%</strong>
+                <span>Estimated model accuracy</span>
+              </article>
+              <article class="mini-stat">
+                <strong>45K+</strong>
+                <span>Users trust Arixion</span>
+              </article>
+            </div>
+          </div>
+
+          <aside
+            class="scanner-card surface-card reveal"
+            id="scanner"
+            aria-labelledby="scanner-heading"
+          >
+            <div class="section-heading compact">
+              <div>
+                <span class="section-kicker">Claim scanner</span>
+                <h2 id="scanner-heading">Run a verification pass</h2>
+              </div>
+              <span class="counter" id="char-counter" aria-live="polite">0 / 1000</span>
+            </div>
+
+            <form id="scanner-form" class="scanner-form" novalidate>
+              <label class="sr-only" for="claim-input">
+                Paste a claim to verify
+              </label>
+              <textarea
+                id="claim-input"
+                class="claim-input"
+                maxlength="1000"
+                spellcheck="true"
+                autocomplete="off"
+                placeholder="Paste a claim, headline, or viral message here..."
+              ></textarea>
+
+              <div class="scanner-notes">
+                <p>Press Ctrl + Enter to scan quickly.</p>
+                <div class="scanner-actions">
+                  <button
+                    class="button button-ghost"
+                    type="button"
+                    id="sample-claim-btn"
+                  >
+                    Use sample
+                  </button>
+                  <button
+                    class="button button-ghost"
+                    type="button"
+                    id="camera-launch-btn"
+                  >
+                    Camera scan
+                  </button>
+                  <button
+                    class="button button-primary"
+                    type="submit"
+                    id="scan-btn"
+                  >
+                    Scan claim
+                  </button>
+                </div>
+              </div>
+            </form>
+          </aside>
+        </div>
+      </section>
+
+      <section class="section" id="results" aria-labelledby="results-heading">
+        <div class="container results-layout">
+          <div class="section-heading reveal">
+            <div>
+              <span class="section-kicker">Verification report</span>
+              <h2 id="results-heading">Analysis results</h2>
+            </div>
+            <p class="section-subtitle">
+              A structured verdict with confidence, reasoning, risk signals,
+              and source suggestions.
+            </p>
+          </div>
+
+          <div class="results-grid">
+            <article
+              class="result-panel surface-card reveal"
+              aria-live="polite"
+              aria-atomic="true"
+            >
+              <div class="result-topline">
+                <span class="status-badge pending" id="status-badge">
+                  Awaiting scan
+                </span>
+                <span class="result-label">Live result state</span>
+              </div>
+
+              <div class="result-content" id="result-content">
+                <div class="placeholder-state">
+                  <div class="placeholder-orb" aria-hidden="true"></div>
+                  <h3>Your claim analysis will appear here.</h3>
+                  <p>
+                    Start with a headline, quote, social post, or a camera scan,
+                    and Arixion AI will generate a guided verification summary.
+                  </p>
+                </div>
+              </div>
+            </article>
+
+            <aside class="network-panel surface-card reveal">
+              <div class="section-heading compact no-margin">
+                <div>
+                  <span class="section-kicker">Network insight</span>
+                  <h3>Trending now</h3>
+                </div>
+              </div>
+              <p class="network-copy">
+                Live verification telemetry from the Arixion AI engine.
+              </p>
+
+              <div class="stats-grid">
+                <article class="metric-card">
+                  <strong>12.5K</strong>
+                  <span>Claims verified today</span>
+                </article>
+                <article class="metric-card">
+                  <strong>98.2%</strong>
+                  <span>Estimated accuracy</span>
+                </article>
+                <article class="metric-card">
+                  <strong>45K+</strong>
+                  <span>Users trust Arixion</span>
+                </article>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="method">
+        <div class="container method-layout">
+          <div class="method-main surface-card reveal">
+            <div class="section-heading">
+              <div>
+                <span class="section-kicker">Method</span>
+                <h2>How Arixion verifies</h2>
+              </div>
+              <p class="section-subtitle">
+                Arixion AI combines layered analysis with the SIFT approach to
+                help you verify before you share.
+              </p>
+            </div>
+
+            <div class="method-grid" aria-label="SIFT steps">
+              <article class="method-card">
+                <span class="step-pill">1</span>
+                <h3>Stop</h3>
+                <p>
+                  Pause before sharing. Ask whether the claim is designed to
+                  trigger a strong, fast reaction.
+                </p>
+              </article>
+
+              <article class="method-card">
+                <span class="step-pill">2</span>
+                <h3>Investigate</h3>
+                <p>
+                  Look at the source. Does it have clear ownership, editorial
+                  standards, and a track record?
+                </p>
+              </article>
+
+              <article class="method-card">
+                <span class="step-pill">3</span>
+                <h3>Find</h3>
+                <p>
+                  Search for other coverage. Can you find multiple credible
+                  outlets confirming the same core facts?
+                </p>
+              </article>
+
+              <article class="method-card">
+                <span class="step-pill">4</span>
+                <h3>Trace</h3>
+                <p>
+                  Go back to the original context. Has the quote, image, or
+                  statistic been cropped or reframed?
+                </p>
+              </article>
+            </div>
+          </div>
+
+          <aside
+            class="about-panel surface-card reveal"
+            id="about"
+            aria-labelledby="about-heading"
+          >
+            <span class="section-kicker">Mission</span>
+            <h2 id="about-heading">About Arixion AI</h2>
+            <p>
+              Arixion AI is a verification-first AI engine dedicated to combating
+              misinformation and strengthening media literacy. It filters digital
+              noise and highlights verifiable, trustworthy insight.
+            </p>
+            <p>
+              Our mission is to make “verify first, share later” the default
+              habit for how people experience information online.
+            </p>
+            <ul class="about-list" role="list">
+              <li>Verification-first interface design</li>
+              <li>Clear credibility signals</li>
+              <li>Practical guidance before re-sharing</li>
+            </ul>
+          </aside>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-shell">
+        <div class="footer-brand-block">
+          <a class="brand footer-brand" href="#top" aria-label="Arixion AI home">
+            <span class="brand-mark small" aria-hidden="true"></span>
+            <span class="brand-text">
+              <strong>Arixion AI</strong>
+              <small>Intelligence That Verifies</small>
+            </span>
+          </a>
+          <p class="footer-note">
+            Built to help people slow down, inspect claims, and share with more
+            confidence.
+          </p>
+        </div>
+
+        <div class="footer-links">
+          <a href="#scanner">Scanner</a>
+          <a href="#results">Results</a>
+          <a href="#method">Method</a>
+          <a href="#about">About</a>
         </div>
       </div>
+    </footer>
 
-      <div class="scanner-input">
-        <label class="sr-only" for="claim-input">
-          Paste any claim, headline, or article snippet to verify
-        </label>
-        <textarea
-          id="claim-input"
-          class="input"
-          placeholder="Paste any claim, headline, or article snippet to verify..."
-          maxlength="1000"
-        ></textarea>
-      </div>
-
-      <div class="scanner-actions">
-        <button class="btn btn-primary" type="button" id="scan-btn">
-          Scan Claim
-        </button>
-      </div>
-      <p class="scanner-hint">Press Ctrl + Enter to scan quickly.</p>
-    </section>
-
-    <!-- Results -->
-    <section
-      id="verified"
-      class="results"
-      aria-labelledby="results-heading"
+    <div
+      id="camera-modal"
+      class="camera-modal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="camera-modal-title"
       hidden
     >
-      <div class="result-header">
-        <h2 id="results-heading">Analysis Results</h2>
-        <span class="status-badge pending">Pending</span>
-      </div>
-      <div class="result-content" id="results-content">
-        <p>Your claim analysis will appear here.</p>
-      </div>
-    </section>
+      <div class="camera-modal-panel">
+        <button
+          id="camera-close"
+          class="camera-close"
+          type="button"
+          aria-label="Close camera"
+        >
+          ×
+        </button>
 
-    <!-- Trending stats -->
-    <section id="trending" class="trending" aria-labelledby="trending-heading">
-      <h2 id="trending-heading">Trending Now</h2>
-      <div class="stats-grid">
-        <div class="stat-card">
-          <span class="stat-value">12.5K</span>
-          <span class="stat-label">Claims Verified Today</span>
+        <div class="camera-header">
+          <h2 id="camera-modal-title">Scan text with camera</h2>
+          <p>Point the camera at text, capture a frame, then extract and verify it.</p>
         </div>
-        <div class="stat-card">
-          <span class="stat-value">98.2%</span>
-          <span class="stat-label">Estimated Accuracy</span>
-        </div>
-        <div class="stat-card">
-          <span class="stat-value">45K+</span>
-          <span class="stat-label">Users Trust Arixion</span>
-        </div>
-      </div>
-    </section>
 
-    <!-- SIFT / Guide -->
-    <section id="guide" class="guide" aria-labelledby="guide-heading">
-      <h2 id="guide-heading">How Arixion Verifies</h2>
-      <p class="guide-intro">
-        Arixion AI combines layered analysis with the SIFT approach to help you
-        verify before you share.
-      </p>
-      <div class="steps-grid">
-        <div class="step">
-          <span class="step-number">1</span>
-          <h3>Stop</h3>
-          <p>
-            Pause before sharing. Ask whether the claim is designed to trigger a strong,
-            fast reaction.
-          </p>
-        </div>
-        <div class="step">
-          <span class="step-number">2</span>
-          <h3>Investigate</h3>
-          <p>
-            Look at the source. Does it have clear ownership, editorial standards,
-            and a track record?
-          </p>
-        </div>
-        <div class="step">
-          <span class="step-number">3</span>
-          <h3>Find</h3>
-          <p>
-            Search for other coverage. Can you find multiple credible outlets confirming
-            the same core facts?
-          </p>
-        </div>
-        <div class="step">
-          <span class="step-number">4</span>
-          <h3>Trace</h3>
-          <p>
-            Go back to the original context. Has the quote, image, or statistic been
-            cropped or reframed?
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <!-- About -->
-    <section id="about" class="about" aria-labelledby="about-heading">
-      <h2 id="about-heading">About Arixion AI</h2>
-      <p class="about-intro">
-        Arixion AI is a verification-first AI engine dedicated to combating misinformation
-        and strengthening media literacy. It filters digital noise and highlights
-        verifiable, trustworthy insight.
-      </p>
-      <p class="about-intro">
-        Our mission is to make “verify first, share later” the default habit for how
-        people experience information online.
-      </p>
-    </section>
-  </main>
-
-  <footer>
-    <div class="container">
-      <div class="footer-content">
-        <div class="footer-brand">
-          <span class="brand-mark" aria-hidden="true"></span>
-          <div>
-            <span class="brand-name">Arixion AI</span>
-            <span class="brand-tag">Intelligence That Verifies.</span>
-          </div>
-        </div>
-        <div class="footer-links">
-          <a href="#privacy">Privacy Policy</a>
-          <a href="#terms">Terms of Service</a>
-          <a href="#contact">Contact</a>
-          <a href="#feedback">Feedback</a>
-        </div>
-      </div>
-      <p class="footer-note">
-        © 2026 Arixion AI. All rights reserved.
-      </p>
-    </div>
-  </footer>
-
-  <!-- Camera Scanner Modal -->
-  <div
-    id="camera-modal"
-    class="camera-modal"
-    role="dialog"
-    aria-modal="true"
-    aria-labelledby="camera-modal-title"
-    hidden
-  >
-    <div class="camera-modal-content">
-      <button
-        id="camera-close"
-        class="camera-close"
-        type="button"
-        aria-label="Close camera"
-      >
-        &times;
-      </button>
-
-      <!-- STEP 1: Camera View -->
-      <div id="camera-step" class="camera-step active" aria-live="polite">
-        <h2 id="camera-modal-title" class="sr-only">Scan text with camera</h2>
-        <div class="camera-view">
-          <video id="camera-feed" autoplay playsinline muted></video>
-          <div class="camera-overlay">
-            <div class="scan-frame">
-              <div class="scan-corner top-left"></div>
-              <div class="scan-corner top-right"></div>
-              <div class="scan-corner bottom-left"></div>
-              <div class="scan-corner bottom-right"></div>
+        <div class="camera-shell">
+          <div class="camera-stage">
+            <div class="camera-preview-wrap">
+              <video id="camera-video" autoplay playsinline muted></video>
+              <canvas id="camera-canvas"></canvas>
             </div>
-            <p class="scan-guide">Point the camera at text to scan.</p>
-          </div>
-        </div>
-        <div class="camera-controls">
-          <button id="capture-btn" class="capture-btn" type="button">
-            <span class="capture-icon"></span>
-            <span class="sr-only">Capture image</span>
-          </button>
-        </div>
-      </div>
 
-      <!-- STEP 2: Preview -->
-      <div id="preview-step" class="camera-step" aria-live="polite">
-        <div class="preview-container">
-          <img
-            id="captured-preview"
-            alt="Captured image preview"
-          />
-        </div>
-        <div class="preview-actions">
-          <button id="retake-btn" class="btn btn-ghost" type="button">
-            Retake
-          </button>
-          <button id="verify-btn" class="btn btn-primary" type="button">
-            Verify Now
-          </button>
-        </div>
-      </div>
+            <div class="camera-actions">
+              <button class="button button-primary" id="capture-btn" type="button">
+                Capture image
+              </button>
+            </div>
+          </div>
 
-      <!-- STEP 3: Processing -->
-      <div id="processing-step" class="camera-step" aria-live="assertive">
-        <div class="processing-container">
-          <div class="processing-spinner" aria-hidden="true"></div>
-          <h3>Scanning text…</h3>
-          <p id="processing-status">Extracting text from image</p>
-          <div class="processing-progress" aria-hidden="true">
-            <div class="progress-bar" id="progress-bar"></div>
-          </div>
-        </div>
-      </div>
+          <div class="camera-side">
+            <div>
+              <h3>Preview</h3>
+              <p class="camera-help">Captured image preview and OCR flow.</p>
+            </div>
 
-      <!-- STEP 4: Results -->
-      <div id="results-step" class="camera-step" aria-live="polite">
-        <div class="results-container">
-          <div class="results-header">
-            <h3>Analysis Result</h3>
-            <button
-              id="new-scan-btn"
-              class="btn btn-ghost btn-sm"
-              type="button"
-            >
-              New Scan
-            </button>
+            <div class="capture-preview">
+              <img id="captured-preview" alt="Captured image preview" />
+            </div>
+
+            <div class="camera-inline-actions">
+              <button class="button button-ghost" id="retake-btn" type="button">
+                Retake
+              </button>
+              <button class="button button-primary" id="verify-image-btn" type="button">
+                Verify now
+              </button>
+            </div>
+
+            <div class="scan-progress" id="scan-progress" hidden>
+              <h3>Scanning text…</h3>
+              <p id="scan-progress-label">Extracting text from image</p>
+              <div class="progress-bar">
+                <span id="scan-progress-bar"></span>
+              </div>
+            </div>
+
+            <div class="camera-result">
+              <h3>Analysis Result</h3>
+              <button id="new-scan-btn" class="button button-ghost btn-sm" type="button">
+                New scan
+              </button>
+
+              <div class="report-block">
+                <h4>Extracted Text</h4>
+                <div id="scan-extracted-result" class="verification-result">
+                  Capture an image to extract text.
+                </div>
+              </div>
+            </div>
           </div>
-          <div class="extracted-text">
-            <h4>Extracted Text</h4>
-            <p id="scanned-text" class="extracted-text-content"></p>
-          </div>
-          <div
-            id="scan-extracted-result"
-            class="verification-result"
-          ></div>
         </div>
       </div>
     </div>
 
-    <canvas id="camera-canvas" style="display: none;"></canvas>
-  </div>
-
-  <script src="./script.js"></script>
-</body>
+    <script src="script.js"></script>
+  </body>
 </html>
