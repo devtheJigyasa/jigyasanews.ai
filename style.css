@@ -1,3 +1,29 @@
+:root {
+  --primary: #2563EB;
+  --accent:  #10B981;
+  --background: #0F172A;
+}
+
+body {
+  background-color: var(--background);
+  color: #E5E7EB;
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+a,
+button {
+  color: var(--primary);
+}
+
+button.primary {
+  background-color: var(--primary);
+  color: #ffffff;
+}
+
+.badge-verified {
+  background-color: var(--accent);
+  color: #022c22;
+}
 :root,
 [data-theme="light"] {
     --text-xs: clamp(0.7rem, 0.65rem + 0.2vw, 0.85rem);
