@@ -1,156 +1,168 @@
-![Verification-First AI](https://img.shields.io/badge/Verification--First-AI-2563EB?style=for-the-badge)
-![Status Active](https://img.shields.io/badge/Status-Active-10B981?style=for-the-badge)
-![Made in India](https://img.shields.io/badge/Made%20in-India-FF9933?style=for-the-badge)
+<p align="center">
+  <!-- Optional: replace with your real logo file or remove this block -->
+  <!-- <img src="assets/logo-arixion.png" alt="Arixion AI Logo" width="110" /> -->
+</p>
 
-# Arixion AI
+<p align="center">
+  <a href="https://jigyasaquest.github.io/arixion-ai/">
+    <img src="https://img.shields.io/badge/Live%20Demo-Open-2563EB?style=for-the-badge" alt="Live Demo" />
+  </a>
+  <a href="https://github.com/JigyasaQuest/arixion-ai">
+    <img src="https://img.shields.io/badge/GitHub-Repository-111827?style=for-the-badge&logo=github" alt="Repository" />
+  </a>
+  <a href="https://github.com/JigyasaQuest/arixion-ai/issues">
+    <img src="https://img.shields.io/badge/Issues-Feedback-10B981?style=for-the-badge" alt="Issues" />
+  </a>
+</p>
 
-**Intelligence That Verifies.**
+<p align="center">
+  <img src="https://img.shields.io/badge/Verification--First-AI-2563EB?style=for-the-badge" />
+  <img src="https://img.shields.io/badge/Status-Active-10B981?style=for-the-badge" />
+  <img src="https://img.shields.io/badge/Made%20in-India-FF9933?style=for-the-badge" />
+</p>
 
-Arixion AI is a verification‑first AI experience designed to filter digital noise, analyze claims, and surface more trustworthy, verifiable insight — built as a frontend‑only web experience using HTML, CSS, and JavaScript.[page:3]
+<h1 align="center">Arixion AI</h1>
+<p align="center"><b>Intelligence That Verifies.</b></p>
 
-- **Live Demo:** https://jigyasaquest.github.io/arixion-ai/  
-- **Repository:** https://github.com/JigyasaQuest/arixion-ai  
+<p align="center">
+  Arixion AI is a verification‑first AI interface that tackles one core problem of the internet: separating signal from noise.
+</p>
+
+---
+
+## TL;DR
+
+- **What**: Frontend‑only prototype of a verification‑first AI experience (HTML, CSS, JS).[page:3]  
+- **Why**: Shift AI from “answer generator” to **credibility layer** on top of noisy information.[page:3]  
+- **How**: Opinionated UI flows for claims, guidance, and verification‑oriented usage, ready to be wired into real backends/APIs.[page:3]  
 
 ---
 
 ## Overview
 
-Arixion AI is built for a digital world flooded with fast, noisy, and often misleading information.[page:3]  
-Instead of focusing only on answer generation, Arixion AI starts with **verification first**. It is designed to inspect claims, filter weak signals (conceptually), and guide users toward information they can trust more confidently.[page:3]
+The internet is optimized for speed, virality, and engagement, not for truth.[page:3]  
+Arixion AI explores what happens when you flip that: the interface is designed around **verification first**, not endless chat.[page:3]
 
-> **Noise in → analysis and filtering → verifiable insight out**[page:3]
+Instead of “ask me anything”, the product is centered on **claims**—things you want to check, question, or investigate.[page:3]  
+This repo focuses on the **experience layer**: layout, flows, copy, and visual system for a verification‑first AI product.[page:3]
 
-This implementation is currently a **frontend prototype** focused on the interface, flows, and product experience for verification‑first AI.[page:3]
+> Noise in → structured analysis → clearer, more verifiable insight out[page:3]
 
 ---
 
-## Why Arixion AI
+## Who Is This For?
 
-Modern information systems are optimized for speed, virality, and engagement.[page:3]  
-In that environment, truth is often buried under repetition, bias, and low‑quality sources.[page:3]
+Arixion AI is aimed at people who care more about **“Can I trust this?”** than **“Give me a quick summary.”**[page:3]
 
-Arixion AI aims to reverse that flow by making verification the starting point rather than an afterthought.[page:3]
+- Curious users who double‑check information.  
+- Builders exploring AI products around **trust, credibility, and research**.  
+- Designers and developers who want a starting point for verification‑centric UX.  
 
-It is designed for people who want:[page:3]
+---
 
-- More signal, less noise  
-- Clearer reasoning behind outputs  
-- Trust‑oriented AI workflows  
-- A product philosophy built around verification, not hype  
+## Core Ideas
+
+- **Verification‑first, not answer‑first** – Everything revolves around claims, context, and checking, not pure generation.[page:3]  
+- **Opinionated UX** – Clear sections for claim input, guidance, and results to encourage better information habits.[page:3]  
+- **Frontend‑only prototype** – Clean, framework‑free HTML/CSS/JS that you can drop into any stack or hook into your own APIs later.[page:3]  
 
 ---
 
 ## Features (Current Prototype)
 
-- Verification‑first AI **interface** and UX flows.[page:3]  
-- Structured layout for claim input, analysis, and results sections.[page:3]  
-- Clean design for scanning, reading, and research workflows.[page:3]  
-- Desktop and mobile optimized UI (responsive design via CSS).[page:3]  
-- Visual system for future connection to real verification backends / APIs.[page:3]
+- Structured **claim input** area (what are you checking?).[page:3]  
+- Clear **analysis / method** sections to reveal the “how”, not just the “what”.[page:3]  
+- Clean, responsive layout that works on both desktop and mobile.[page:3]  
+- Visual system that feels like a real product, not a rough demo: typography, color, spacing, hierarchy.[page:3]  
+- Ready to connect to any verification or search backend (NewsAPI, custom LLM, RAG, etc.)—but this repository itself is **pure frontend**.[page:3]  
 
-This version does **not** include a live backend or external API integration yet; it focuses on the product surface and experience.[page:3]
-
----
-
-## Demo
-
-**Live Demo:** https://jigyasaquest.github.io/arixion-ai/[page:3]
+> There is intentionally **no backend in this repo**. It’s the surface layer you can plug your own intelligence into.[page:3]
 
 ---
 
-## Desktop Preview
+## Live Demo
 
-- [Arixion AI desktop home screen](assets/desktop-home.jpg)[page:3]  
-- [Arixion AI desktop scanner screen](assets/desktop-scanner.jpg)[page:3]  
-- [Arixion AI desktop verification method screen](assets/desktop-method.jpg)[page:3]
+- **Demo:** https://jigyasaquest.github.io/arixion-ai/[page:3]  
 
----
-
-## Mobile View
-
-- [Arixion AI mobile home screen](assets/mobile-home.jpeg)[page:3]  
-- [Arixion AI mobile scanner screen](assets/mobile-scanner.jpeg)[page:3]  
-- [Arixion AI mobile verification method screen](assets/mobile-method.jpeg)[page:3]  
-- [Arixion AI mobile results screen](assets/mobile-results.jpeg)[page:3]
+You can experience the full flow (claims → method → results views) directly in the browser.[page:3]
 
 ---
 
-## Product Direction
+## Screenshots
 
-Arixion AI is positioned as a verification‑first product with a structured interface for scanning claims, guiding verification behavior, and building a more trustworthy AI experience.[page:3]  
-This makes Arixion AI closer to a **trust‑and‑credibility layer** for information than a generic chatbot.[page:3]
+### Desktop
 
-This repo represents the **UI/UX layer** of that vision; backend intelligence and verification engines are planned separately.[page:3]
+- [Desktop home](assets/desktop-home.jpg) – Primary landing and entry point for verification.[page:3]  
+- [Desktop scanner](assets/desktop-scanner.jpg) – Visual design for a scanning / capture flow.[page:3]  
+- [Desktop method](assets/desktop-method.jpg) – “How it works” / method view.[page:3]  
+
+### Mobile
+
+- [Mobile home](assets/mobile-home.jpeg)[page:3]  
+- [Mobile scanner](assets/mobile-scanner.jpeg)[page:3]  
+- [Mobile method](assets/mobile-method.jpeg)[page:3]  
+- [Mobile results](assets/mobile-results.jpeg)[page:3]  
 
 ---
 
-## Product Philosophy
+## Brand & Product Narrative
 
-Arixion AI is not just another AI assistant.[page:3]  
-It is built on the belief that the future of intelligence depends on **credibility, transparency, and verification**.[page:3]
-
-> **Intelligence That Verifies.**[page:3]
-
----
-
-## Brand System
+### Brand System
 
 | Element              | Value                                                                                          |
 |----------------------|------------------------------------------------------------------------------------------------|
-| Brand name           | **Arixion AI**                                                                                 |
-| Former name          | **JigyasaNews.AI**                                                                             |
-| Tagline              | **Intelligence That Verifies.**                                                                |
-| One‑line description | A verification‑first AI engine that filters digital noise through layered analysis to surface trustworthy, verifiable insights. |
+| Brand name           | **Arixion AI**                                                                                |
+| Former name          | **JigyasaNews.AI**                                                                            |
+| Tagline              | **Intelligence That Verifies.**                                                               |
+| One‑liner            | A verification‑first AI interface that filters digital noise into clearer, more trustworthy insight. |
 
 [page:3]
 
----
+### Visual Identity
 
-## Visual Identity
+- **Symbolism**: magnifying glass (investigation) + layered funnel (filtering).[page:3]  
+- **Tone**: focused, analytical, trustworthy – no AI “magic” glitter.[page:3]  
 
-### Logo Direction
+**Color palette**
 
-The visual direction is based on:[page:3]
-
-- A **magnifying glass** for investigation and scrutiny  
-- A **layered funnel structure** for analysis, filtering, and refinement  
-- A minimal geometric form suited to startup, SaaS, and AI product branding  
-
-### Color Palette
-
-| Token         | Value     | Meaning                                      |
-|--------------|-----------|----------------------------------------------|
-| Primary      | `#2563EB` | Trust, intelligence, signal                  |
-| Accent       | `#10B981` | Verified, truth, confidence                  |
-| Background   | `#0F172A` | Deep slate for product UI and landing pages  |
-| Text Primary | `#E5E7EB` | Main readable content                        |
-| Muted Text   | `#9CA3AF` | Secondary text                               |
-| Borders / Lines | `#1F2937` | UI structure and separation              |
+| Token           | Value     | Meaning                                      |
+|-----------------|-----------|----------------------------------------------|
+| Primary         | `#2563EB` | Trust, intelligence, signal                  |
+| Accent          | `#10B981` | Verified, truth, confidence                  |
+| Background      | `#0F172A` | Deep slate for product UI and landing pages  |
+| Text Primary    | `#E5E7EB` | Main readable content                        |
+| Muted Text      | `#9CA3AF` | Secondary text                               |
+| Borders / Lines | `#1F2937` | Structure and separation                     |
 
 [page:3]
 
-### Typography
+**Typography**
 
-- **Headings / logo:** Inter or Poppins, semibold to bold  
-- **Body:** Inter regular[page:3]
+- **Headings / logo**: Inter or Poppins, semibold–bold.  
+- **Body**: Inter regular, comfortable line height for reading research content.[page:3]  
 
 ---
 
 ## Tech Stack
 
-- HTML5[page:3]  
-- CSS3[page:3]  
-- JavaScript (vanilla)[page:3]  
-- Static front‑end architecture (no backend in this repo)[page:3]  
-- Responsive design for desktop and mobile.[page:3]
+No frameworks, no build step, no hidden magic.[page:3]
+
+- HTML5 – semantic structure.[page:3]  
+- CSS3 – responsive layout, typography, and theming.[page:3]  
+- Vanilla JavaScript – UI behavior and interactions.[page:3]  
+- Static deployment – works on GitHub Pages, any static host, or your own server.[page:3]  
+
+This makes Arixion AI easy to:[page:3]  
+
+- Integrate into existing stacks.  
+- Wrap inside Electron / Tauri.  
+- Connect to any REST/GraphQL/LLM API you like.  
 
 ---
 
 ## Getting Started
 
-This is a static site; you can run it locally with any simple HTTP server.[page:3]
-
-### 1. Clone the repository
+### 1. Clone
 
 ```bash
 git clone https://github.com/JigyasaQuest/arixion-ai.git
@@ -158,17 +170,17 @@ cd arixion-ai
 ```
 [page:3]
 
-### 2. Open directly (quick way)
+### 2. Run (quick way)
 
 You can simply open `index.html` in your browser by double‑clicking it.[page:3]  
-For best results (and to avoid some browser restrictions), use a local server.[page:3]
+For a smoother experience, especially if you later add APIs, use a local server.[page:3]
 
-### 3. Run with a simple local server (recommended)
+### 3. Run with a simple server (recommended)
 
 If you have Python installed:
 
 ```bash
-# From the project root
+# from the project root
 python -m http.server 8000
 ```
 
@@ -179,7 +191,7 @@ http://localhost:8000
 ```
 [page:3]
 
-You can also use VS Code Live Server or any static server tool you prefer.[page:3]
+You can also use VS Code Live Server, Nginx, or any other static server you prefer.[page:3]
 
 ---
 
@@ -206,36 +218,34 @@ arixion-ai/
 
 ## Roadmap
 
-Planned direction for Arixion AI (beyond this frontend prototype) includes:[page:3]
+Planned directions for Arixion AI beyond this frontend prototype:[page:3]
 
-- Connecting the UI to real verification backends and APIs.  
-- Source‑backed verification workflows and explicit citations.  
-- Stronger claim credibility scoring and explanations.  
-- Better reasoning visibility for outputs.  
-- Expanded scanning and extraction flows.  
-- Verification dashboards and research interfaces.  
-- Trust layers for fast‑moving digital information.[page:3]
+- Plug into a real verification backend (NewsAPI, LLM, custom fact‑checking engine).  
+- Source‑backed verification with explicit citations and transparency.  
+- Claim credibility scoring with clear explanations.  
+- Richer scanning / extraction flows for long content.  
+- Research‑oriented dashboards for heavy users.  
+- Trust layers for fast‑moving news and social content.  
 
 ---
 
 ## Contributing
 
-Contributions are welcome if they align with the project’s verification‑first vision.[page:3]
+Contributions are welcome—as long as they respect the core idea: **verification over hype**.[page:3]
 
-You can contribute by:[page:3]
+You can help by:[page:3]
 
-- Improving UI and UX  
-- Refining flows for claims and results  
-- Strengthening frontend architecture and responsiveness  
-- Improving performance and accessibility  
-- Proposing features that increase trust, clarity, and usefulness  
+- Improving UI/UX and accessibility.  
+- Refining flows for claims, method, and results.  
+- Hardening the frontend structure and responsiveness.  
+- Prototyping integrations with real verification backends.  
 
-### Contribution flow
+### Contribution Flow
 
 1. Fork the repository.  
 2. Create a feature branch.  
 3. Make your changes.  
-4. Open a pull request with a clear explanation.[page:3]
+4. Open a pull request with a clear description and, ideally, screenshots.[page:3]  
 
 ---
 
@@ -245,6 +255,6 @@ This project is licensed under the **MIT License**.[page:3]
 
 ---
 
-## Short Description
+## One‑Line Pitch
 
-**Arixion AI — Intelligence That Verifies. A verification‑first AI interface that prototypes how AI can filter digital noise into trustworthy, verifiable insights, built as a static HTML/CSS/JS experience.**[page:3]
+**Arixion AI — Intelligence That Verifies. A focused, frontend‑only starter for building AI products that care about truth, not just output.**[page:3]
