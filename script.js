@@ -1,82 +1,165 @@
+// ===== CONFIG =====
+const SAMPLE_CLAIMS = [
+  "PM of India is Narendra Modi",
+  "Drinking hot water cures all viral illnesses",
+  "The capital of France is Paris",
+  "NASA found alien life on Mars",
+  "Eating garlic can completely prevent flu",
+  "The president of the USA is Donald Trump",
+  "A viral video proves the moon landing was fake",
+  "Vaccines cause all chronic diseases",
+  "The Great Wall of China is visible from space",
+  "India won independence in 1947",
+  "Shocking: one fruit can melt belly fat overnight",
+  "The Earth revolves around the Sun",
+  "A new study says chocolate cures diabetes",
+  "The CEO of Tesla is Elon Musk",
+  "Breaking: scientists reverse aging in humans completely",
+  "Mount Everest is the tallest mountain above sea level",
+  "A WhatsApp forward says banks will shut for 10 days",
+  "The capital of Japan is Tokyo",
+  "A miracle oil can regrow hair in 24 hours",
+  "The Taj Mahal is in Agra"
+];
+
+// NewsAPI developer plan is mainly for development/testing.
+// In browser-only apps, your key is exposed.
+const NEWS_API_KEY = "yMaSo0KoEyc0SkhZGUGx6LXTm3Qhv_8iQGn7au2hB-CSg3WK";
+const NEWS_API_MIN_INTERVAL_MS = 2500;
+let lastNewsApiCall = 0;
+
+const TRUSTED_DOMAINS = [
+  "bbc.com",
+  "reuters.com",
+  "apnews.com",
+  "aljazeera.com",
+  "thehindu.com",
+  "indianexpress.com",
+  "ndtv.com",
+  "timesofindia.indiatimes.com"
+];
+
+// ===== DOM HELPERS =====
+const $ = (sel) => document.querySelector(sel);
 const html = document.documentElement;
-const themeToggle = document.querySelector("[data-theme-toggle]");
-const focusInputBtn = document.getElementById("focus-input-btn");
-const sampleClaimBtn = document.getElementById("sample-claim-btn");
-const cameraLaunchBtn = document.getElementById("camera-launch-btn");
-const openCameraBtn = document.getElementById("open-camera-btn");
-const scannerForm = document.getElementById("scanner-form");
-const claimInput = document.getElementById("claim-input");
-const charCounter = document.getElementById("char-counter");
-const resultContent = document.getElementById("result-content");
-const statusBadge = document.getElementById("status-badge");
 
-const cameraModal = document.getElementById("camera-modal");
-const cameraCloseBtn = document.getElementById("camera-close");
-const cameraVideo = document.getElementById("camera-video");
-const cameraCanvas = document.getElementById("camera-canvas");
-const captureBtn = document.getElementById("capture-btn");
-const retakeBtn = document.getElementById("retake-btn");
-const verifyImageBtn = document.getElementById("verify-image-btn");
-const capturedPreview = document.getElementById("captured-preview");
-const scanProgress = document.getElementById("scan-progress");
-const scanProgressBar = document.getElementById("scan-progress-bar");
-const scanProgressLabel = document.getElementById("scan-progress-label");
-const scanExtractedResult = document.getElementById("scan-extracted-result");
-const newScanBtn = document.getElementById("new-scan-btn");
+const themeToggle = $("[data-theme-toggle]");
+const focusInputBtn = $("#focus-input-btn");
+const sampleClaimBtn = $("#sample-claim-btn");
+const cameraLaunchBtn = $("#camera-launch-btn");
+const openCameraBtn = $("#open-camera-btn");
+const scannerForm = $("#scanner-form");
+const claimInput = $("#claim-input");
+const charCounter = $("#char-counter");
+const resultContent = $("#result-content");
+const statusBadge = $("#status-badge");
 
-const SAMPLE_CLAIM =
-  "Breaking: Scientists confirm a viral drink can cure all seasonal illnesses in 24 hours.";
+const cameraModal = $("#camera-modal");
+const cameraCloseBtn = $("#camera-close");
+const cameraVideo = $("#camera-video");
+const cameraCanvas = $("#camera-canvas");
+const captureBtn = $("#capture-btn");
+const retakeBtn = $("#retake-btn");
+const verifyImageBtn = $("#verify-image-btn");
+const capturedPreview = $("#captured-preview");
+const scanProgress = $("#scan-progress");
+const scanProgressBar = $("#scan-progress-bar");
+const scanProgressLabel = $("#scan-progress-label");
+const scanExtractedResult = $("#scan-extracted-result");
+const newScanBtn = $("#new-scan-btn");
 
-// --- API CONFIG ---
-const API_URL = "http://localhost:4000"; // Local dev. Replace with your hosted backend URL.
-// Example: const API_URL = "https://your-app.onrender.com";
+const on = (el, evt, handler) => el && el.addEventListener(evt, handler);
 
+// ===== STATE =====
 let stream = null;
 let capturedImageUrl = "";
 let lastExtractedText = "";
+let ocrWorkerPromise = null;
+let sampleRotationTimer = null;
+let currentSampleIndex = 0;
 
+// ===== THEME =====
 function setTheme(nextTheme) {
   html.setAttribute("data-theme", nextTheme);
 }
 
-themeToggle?.addEventListener("click", () => {
+on(themeToggle, "click", () => {
   const current = html.getAttribute("data-theme") === "light" ? "light" : "dark";
   setTheme(current === "dark" ? "light" : "dark");
 });
 
+// ===== INPUT / COUNTER =====
 function updateCounter() {
-  const count = claimInput.value.length;
-  charCounter.textContent = `${count} / 1000`;
+  if (!claimInput || !charCounter) return;
+  const text = claimInput.value || "";
+  charCounter.textContent = `${text.length} / 1000`;
 }
 
-claimInput?.addEventListener("input", updateCounter);
+on(claimInput, "input", updateCounter);
 
-focusInputBtn?.addEventListener("click", () => {
-  claimInput.value = SAMPLE_CLAIM;
+function getRandomSampleIndex() {
+  return Math.floor(Math.random() * SAMPLE_CLAIMS.length);
+}
+
+function rotateSampleClaim() {
+  if (!claimInput) return;
+  currentSampleIndex = (currentSampleIndex + 1) % SAMPLE_CLAIMS.length;
+  claimInput.placeholder = SAMPLE_CLAIMS[currentSampleIndex];
+}
+
+function startSampleRotation() {
+  if (!claimInput) return;
+  stopSampleRotation();
+  currentSampleIndex = getRandomSampleIndex();
+  claimInput.placeholder = SAMPLE_CLAIMS[currentSampleIndex];
+
+  sampleRotationTimer = setInterval(() => {
+    rotateSampleClaim();
+  }, 4000);
+}
+
+function stopSampleRotation() {
+  if (sampleRotationTimer) {
+    clearInterval(sampleRotationTimer);
+    sampleRotationTimer = null;
+  }
+}
+
+function fillSampleClaim() {
+  if (!claimInput) return;
+  claimInput.value = SAMPLE_CLAIMS[currentSampleIndex] || SAMPLE_CLAIMS[0];
   updateCounter();
   claimInput.focus();
-  claimInput.scrollIntoView({ behavior: "smooth", block: "center" });
+}
+
+on(focusInputBtn, "click", () => {
+  fillSampleClaim();
+  claimInput?.scrollIntoView({ behavior: "smooth", block: "center" });
 });
 
-sampleClaimBtn?.addEventListener("click", () => {
-  claimInput.value = SAMPLE_CLAIM;
-  updateCounter();
-  claimInput.focus();
+on(sampleClaimBtn, "click", fillSampleClaim);
+
+on(claimInput, "focus", stopSampleRotation);
+
+on(claimInput, "blur", () => {
+  if (!claimInput.value.trim()) {
+    startSampleRotation();
+  }
 });
 
-claimInput?.addEventListener("keydown", (event) => {
-  if (event.ctrlKey && event.key === "Enter") {
+on(claimInput, "keydown", (event) => {
+  if (event.ctrlKey && event.key === "Enter" && scannerForm) {
     event.preventDefault();
     scannerForm.requestSubmit();
   }
 });
 
-// --- OLD VERDICT LOGIC (kept as fallback) ---
+// ===== CLAIM HELPER HEURISTIC =====
 function verdictFromText(text) {
-  const normalized = text.toLowerCase();
-  let label = "Needs verification";
+  const normalized = (text || "").toLowerCase();
+  let label = "Needs manual verification";
   let tone = "uncertain";
-  let confidence = 74;
+  let confidence = 70;
   const reasons = [];
 
   if (
@@ -85,7 +168,7 @@ function verdictFromText(text) {
     normalized.includes("must share") ||
     normalized.includes("viral")
   ) {
-    reasons.push("Contains urgency or virality language.");
+    reasons.push("Contains urgency or virality wording.");
     confidence -= 8;
   }
 
@@ -93,12 +176,14 @@ function verdictFromText(text) {
     normalized.includes("always") ||
     normalized.includes("never") ||
     normalized.includes("100%") ||
-    normalized.includes("cure all")
+    normalized.includes("cure all") ||
+    normalized.includes("overnight") ||
+    normalized.includes("miracle")
   ) {
-    reasons.push("Uses absolute or exaggerated wording.");
-    tone = "false";
-    label = "High risk claim";
-    confidence = 32;
+    reasons.push("Contains absolute or exaggerated wording.");
+    label = "Contains suspicious wording";
+    tone = "warning";
+    confidence = 34;
   }
 
   if (
@@ -106,69 +191,353 @@ function verdictFromText(text) {
     normalized.includes("report") ||
     normalized.includes("study")
   ) {
-    reasons.push("Mentions a possible source or evidence cue.");
-    if (tone !== "false") {
-      confidence += 6;
+    reasons.push("Includes a source-like cue that still needs checking.");
+    confidence += 4;
+  }
+
+  if (looksLikeBasicFact(normalized)) {
+    reasons.push("This looks like a basic factual claim, so reference sources may be more useful than recent news.");
+    label = "Basic fact claim";
+    tone = "informational";
+    confidence = 76;
+  }
+
+  if (looksLikeHealthClaim(normalized)) {
+    reasons.push("Health-related claims should be checked with official medical or scientific sources.");
+    if (label !== "Contains suspicious wording") {
+      label = "Health claim";
+      tone = "warning";
     }
   }
 
   if (!reasons.length) {
-    reasons.push("The claim needs source tracing and independent confirmation.");
-  }
-
-  if (tone !== "false" && confidence >= 78) {
-    tone = "true";
-    label = "Likely credible";
-  }
-
-  if (tone !== "false" && confidence < 78) {
-    tone = "uncertain";
-    label = "Needs verification";
+    reasons.push("This claim still needs source checking and context review.");
   }
 
   return {
     label,
     tone,
-    confidence: Math.max(18, Math.min(96, confidence)),
+    confidence: clamp(confidence, 20, 95),
     reasons
   };
 }
 
-// --- RENDER FUNCTIONS ---
-function renderResult(claimText, sourceType = "Text input") {
-  const cleanClaim = claimText.trim();
+function looksLikeBasicFact(text) {
+  const patterns = [
+    /\b(pm|prime minister|president|capital|ceo|founder|located|tallest)\b/,
+    /\bis\b/,
+    /\bof\b|in\b/
+  ];
+  return patterns.every((pattern) => pattern.test(text));
+}
+
+function looksLikeHealthClaim(text) {
+  return (
+    text.includes("cure") ||
+    text.includes("treat") ||
+    text.includes("medicine") ||
+    text.includes("doctor") ||
+    text.includes("disease") ||
+    text.includes("virus") ||
+    text.includes("illness") ||
+    text.includes("flu") ||
+    text.includes("diabetes") ||
+    text.includes("vaccine")
+  );
+}
+
+// ===== NEWS API =====
+async function fetchNewsApiArticles(claimText) {
+  const now = Date.now();
+  if (now - lastNewsApiCall < NEWS_API_MIN_INTERVAL_MS) {
+    await wait(NEWS_API_MIN_INTERVAL_MS - (now - lastNewsApiCall));
+  }
+
+  const query = buildNewsQuery(claimText);
+  const endpoint =
+    `https://newsapi.org/v2/everything?` +
+    `q=${encodeURIComponent(query)}` +
+    `&language=en` +
+    `&sortBy=relevancy` +
+    `&pageSize=5` +
+    `&apiKey=${encodeURIComponent(NEWS_API_KEY)}`;
+
+  const response = await fetch(endpoint, { method: "GET" });
+  lastNewsApiCall = Date.now();
+
+  if (!response.ok) {
+    throw new Error(`News API failed: ${response.status}`);
+  }
+
+  const data = await response.json();
+
+  if (data.status !== "ok") {
+    throw new Error(data.message || "News API returned an error");
+  }
+
+  return Array.isArray(data.articles) ? data.articles.slice(0, 5) : [];
+}
+
+function buildNewsQuery(claimText) {
+  const clean = (claimText || "").trim().replace(/\s+/g, " ");
+  if (!clean) return "";
+
+  const words = clean.split(" ").filter(Boolean);
+  if (words.length <= 8) return `"${clean}"`;
+
+  const filtered = words.filter((word) => word.length > 3).slice(0, 8);
+  return filtered.join(" ");
+}
+
+// ===== WIKIPEDIA =====
+async function fetchWikipediaSummary(claimText) {
+  const query = buildWikipediaQuery(claimText);
+  if (!query) return null;
+
+  const searchUrl =
+    `https://en.wikipedia.org/w/api.php?` +
+    `action=query` +
+    `&list=search` +
+    `&srsearch=${encodeURIComponent(query)}` +
+    `&utf8=1` +
+    `&format=json` +
+    `&origin=*`;
+
+  const searchResponse = await fetch(searchUrl);
+  if (!searchResponse.ok) {
+    throw new Error(`Wikipedia search failed: ${searchResponse.status}`);
+  }
+
+  const searchData = await searchResponse.json();
+  const firstResult = searchData?.query?.search?.[0];
+
+  if (!firstResult?.title) return null;
+
+  const title = firstResult.title;
+  const summaryUrl =
+    `https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(title)}`;
+
+  const summaryResponse = await fetch(summaryUrl);
+  if (!summaryResponse.ok) {
+    throw new Error(`Wikipedia summary failed: ${summaryResponse.status}`);
+  }
+
+  const summaryData = await summaryResponse.json();
+
+  return {
+    title: summaryData.title || title,
+    extract: summaryData.extract || "No summary available.",
+    url:
+      summaryData?.content_urls?.desktop?.page ||
+      `https://en.wikipedia.org/wiki/${encodeURIComponent(title)}`,
+    source: "Wikipedia"
+  };
+}
+
+function buildWikipediaQuery(claimText) {
+  const clean = (claimText || "").trim();
+  if (!clean) return "";
+
+  const normalized = clean.toLowerCase();
+  const patternsToStrip = [
+    "breaking:",
+    "shocking:",
+    "breaking",
+    "shocking",
+    "viral",
+    "must share"
+  ];
+
+  let query = normalized;
+  patternsToStrip.forEach((part) => {
+    query = query.replaceAll(part, "");
+  });
+
+  return query.replace(/\s+/g, " ").trim().slice(0, 120);
+}
+
+// ===== ANALYSIS AGGREGATION =====
+function getHostname(url) {
+  try {
+    return new URL(url).hostname.replace(/^www\./, "").toLowerCase();
+  } catch {
+    return "";
+  }
+}
+
+function normalizeArticles(articles) {
+  return (articles || []).map((article) => {
+    const host = getHostname(article.url || "");
+    const trusted = TRUSTED_DOMAINS.some(
+      (domain) => host === domain || host.endsWith(`.${domain}`)
+    );
+
+    return {
+      title: article.title || "Untitled article",
+      description: article.description || "No description available.",
+      url: article.url || "#",
+      image: article.urlToImage || "",
+      source: article.source?.name || host || "Unknown source",
+      published: article.publishedAt || "",
+      trusted
+    };
+  });
+}
+
+function buildCombinedAnalysis(claimText, articles, wiki = null) {
+  const base = verdictFromText(claimText);
+  const normalizedArticles = normalizeArticles(articles);
+
+  let label = base.label;
+  let tone = base.tone;
+  let confidence = base.confidence;
+  const reasons = [...base.reasons];
+
+  const articleCount = normalizedArticles.length;
+  const trustedCount = normalizedArticles.filter((a) => a.trusted).length;
+
+  if (looksLikeBasicFact((claimText || "").toLowerCase())) {
+    reasons.push("For basic facts, Wikipedia or official reference sources may help more than recent news.");
+  }
+
+  if (articleCount === 0) {
+    reasons.push("No strong related source matches were found in recent news results.");
+    if (label !== "Health claim" && label !== "Contains suspicious wording") {
+      label = wiki ? "Reference source found" : "No strong source match";
+      tone = wiki ? "informational" : "uncertain";
+    }
+    confidence -= 8;
+  } else if (articleCount <= 2) {
+    reasons.push("A small number of related articles were found.");
+    if (label !== "Contains suspicious wording") {
+      label = "Some related coverage found";
+    }
+    confidence += 4;
+  } else {
+    reasons.push("Multiple related articles were found.");
+    if (label !== "Contains suspicious wording") {
+      label = "Related coverage found";
+    }
+    confidence += 8;
+  }
+
+  if (trustedCount >= 2) {
+    reasons.push("Some matches come from widely recognised outlets.");
+    confidence += 6;
+  }
+
+  if (wiki) {
+    reasons.push("A matching Wikipedia summary was also found.");
+    confidence += 4;
+  }
+
+  return {
+    label,
+    tone,
+    confidence: clamp(confidence, 20, 95),
+    reasons,
+    articles: normalizedArticles,
+    wiki
+  };
+}
+
+// ===== RENDERING =====
+function renderResult(claimText, sourceType = "Text input", analysisData = null) {
+  if (!resultContent || !statusBadge) return;
+
+  const cleanClaim = (claimText || "").trim();
   if (!cleanClaim) return;
 
-  const analysis = verdictFromText(cleanClaim);
+  const analysis = analysisData || {
+    ...verdictFromText(cleanClaim),
+    articles: [],
+    wiki: null
+  };
 
   statusBadge.className = `status-badge ${analysis.tone}`;
   statusBadge.textContent = analysis.label;
+
+  const wikiHtml = analysis.wiki
+    ? `
+      <div class="report-block">
+        <h4>Wikipedia summary</h4>
+        <article class="article-card">
+          <h5>${escapeHtml(analysis.wiki.title)}</h5>
+          <p>${escapeHtml(analysis.wiki.extract)}</p>
+          <div class="article-meta">
+            <span>${escapeHtml(analysis.wiki.source)}</span>
+          </div>
+          <a href="${analysis.wiki.url}" target="_blank" rel="noopener noreferrer">Open Wikipedia</a>
+        </article>
+      </div>
+    `
+    : `
+      <div class="report-block">
+        <h4>Wikipedia summary</h4>
+        <p>No matching Wikipedia summary was found.</p>
+      </div>
+    `;
+
+  const articlesHtml =
+    analysis.articles && analysis.articles.length
+      ? `
+        <div class="report-block">
+          <h4>Related sources</h4>
+          <div class="article-list">
+            ${analysis.articles
+              .map(
+                (article) => `
+              <article class="article-card">
+                <h5>${escapeHtml(article.title)}</h5>
+                <p>${escapeHtml(article.description)}</p>
+                <div class="article-meta">
+                  <span>${escapeHtml(article.source)}</span>
+                  ${article.trusted ? `<span class="trusted-tag">Recognised outlet</span>` : ""}
+                </div>
+                ${
+                  article.url && article.url !== "#"
+                    ? `<a href="${article.url}" target="_blank" rel="noopener noreferrer">Open source</a>`
+                    : ""
+                }
+              </article>
+            `
+              )
+              .join("")}
+          </div>
+        </div>
+      `
+      : `
+        <div class="report-block">
+          <h4>Related sources</h4>
+          <p>No strong related sources were found for this wording.</p>
+        </div>
+      `;
 
   resultContent.innerHTML = `
     <div class="report-card">
       <div class="report-summary">
         <div class="report-claim">
-          <strong>Scanned input:</strong><br />
+          <strong>Scanned claim:</strong><br />
           ${escapeHtml(cleanClaim)}
         </div>
 
         <div class="report-grid">
           <div class="report-stat">
-            <span>Source</span>
+            <span>Input type</span>
             <strong>${escapeHtml(sourceType)}</strong>
           </div>
           <div class="report-stat">
-            <span>Confidence</span>
+            <span>Match strength</span>
             <strong>${analysis.confidence}%</strong>
           </div>
           <div class="report-stat">
-            <span>Verdict</span>
+            <span>Signal</span>
             <strong>${escapeHtml(analysis.label)}</strong>
           </div>
         </div>
 
         <div class="report-block">
-          <h4>Why this result</h4>
+          <h4>Why this appeared</h4>
           <ul>
             ${analysis.reasons.map((reason) => `<li>${escapeHtml(reason)}</li>`).join("")}
           </ul>
@@ -177,170 +546,130 @@ function renderResult(claimText, sourceType = "Text input") {
         <div class="report-block">
           <h4>Suggested next steps</h4>
           <ul>
-            <li>Check the original source and publication date.</li>
-            <li>Look for coverage from multiple credible outlets.</li>
-            <li>Trace whether the wording was cropped or reframed.</li>
+            <li>Review the original wording and publication date.</li>
+            <li>Open multiple linked sources before trusting the claim.</li>
+            <li>Check whether the claim is missing context or reframed.</li>
           </ul>
-        </div>
-      </div>
-    </div>
-  `;
-
-  document.getElementById("results")?.scrollIntoView({
-    behavior: "smooth",
-    block: "start"
-  });
-}
-
-function renderResultFromApi(claimText, apiResult, sourceType = "Text input") {
-  const cleanClaim = claimText.trim();
-  if (!cleanClaim) return;
-
-  const {
-    confidence = 0.5,
-    label = "Needs verification",
-    tone = "uncertain",
-    reasons = [],
-    articles = []
-  } = apiResult;
-
-  const percent = Math.round(confidence * 100);
-
-  statusBadge.className = `status-badge ${tone}`;
-  statusBadge.textContent = label;
-
-  const articlesHtml = articles.length
-    ? `
-      <div class="report-block">
-        <h4>Related Coverage</h4>
-        <ul>
-          ${articles
-            .map(a => `
-              <li>
-                <strong>${escapeHtml(a.title || "Article")}</strong>
-                ${a.source ? ` — ${escapeHtml(a.source)}` : ""}
-                ${a.url ? ` — <a href="${escapeHtml(a.url)}" target="_blank" rel="noopener">Open</a>` : ""}
-              </li>
-            `)
-            .join("")}
-        </ul>
-      </div>
-    `
-    : "";
-
-  resultContent.innerHTML = `
-    <div class="report-card">
-      <div class="report-summary">
-        <div class="report-claim">
-          <strong>Scanned input:</strong><br />
-          ${escapeHtml(cleanClaim)}
-        </div>
-
-        <div class="report-grid">
-          <div class="report-stat">
-            <span>Source</span>
-            <strong>${escapeHtml(sourceType)}</strong>
-          </div>
-          <div class="report-stat">
-            <span>Confidence</span>
-            <strong>${percent}%</strong>
-          </div>
-          <div class="report-stat">
-            <span>Verdict</span>
-            <strong>${escapeHtml(label)}</strong>
-          </div>
         </div>
 
         <div class="report-block">
-          <h4>Why this result</h4>
-          <ul>
-            ${(reasons.length ? reasons : ["No detailed reasoning provided."])
-              .map(r => `<li>${escapeHtml(r)}</li>`)
-              .join("")}
-          </ul>
+          <h4>Important</h4>
+          <p>This Claim Helper suggests related sources and wording cues. It does not determine whether a claim is true or false on its own.</p>
         </div>
+
+        ${wikiHtml}
         ${articlesHtml}
       </div>
     </div>
   `;
 
-  document.getElementById("results")?.scrollIntoView({
+  const resultsRoot = document.getElementById("results");
+  resultsRoot?.scrollIntoView({
     behavior: "smooth",
     block: "start"
   });
 }
 
-function renderLoading(message = "Running verification pass…") {
+function renderLoading(message = "Running Claim Helper…") {
+  if (!statusBadge || !resultContent) return;
   statusBadge.className = "status-badge pending";
-  statusBadge.textContent = "Scanning";
+  statusBadge.textContent = "Checking";
   resultContent.innerHTML = `
     <div class="loading-state">
       <div class="loading-spinner" aria-hidden="true"></div>
       <h3>${escapeHtml(message)}</h3>
-      <p>Evaluating credibility cues and verification signals.</p>
+      <p>Reviewing wording cues and looking for related sources.</p>
     </div>
   `;
 }
 
-// --- API CALL FUNCTION ---
-async function callVerificationApi(claimText, sourceType) {
+// ===== ANALYSIS RUNNER =====
+async function runClaimAnalysis(text, sourceType = "Text input") {
+  const cleanText = (text || "").trim().slice(0, 1000);
+  if (!cleanText) return;
+
+  renderLoading("Running Claim Helper…");
+
+  const baseAnalysis = {
+    ...verdictFromText(cleanText),
+    articles: [],
+    wiki: null
+  };
+
+  await wait(350);
+  renderResult(cleanText, `${sourceType} · Claim Helper`, baseAnalysis);
+
+  let articles = [];
+  let wiki = null;
+
   try {
-    const response = await fetch(`${API_URL}/verify`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ claim: claimText, source: sourceType })
-    });
-
-    if (!response.ok) {
-      throw new Error(`API error: ${response.status}`);
-    }
-
-    return await response.json();
+    articles = await fetchNewsApiArticles(cleanText);
   } catch (error) {
-    console.error("API call failed:", error);
-    // Fallback to local logic if API is not available
-    return null;
+    console.error("News API error:", error);
   }
+
+  try {
+    wiki = await fetchWikipediaSummary(cleanText);
+  } catch (error) {
+    console.error("Wikipedia error:", error);
+  }
+
+  const combined = buildCombinedAnalysis(cleanText, articles, wiki);
+
+  if (!articles.length && !wiki) {
+    combined.reasons.push(
+      "No related news articles or Wikipedia summary could be fetched right now."
+    );
+  }
+
+  renderResult(
+    cleanText,
+    `${sourceType} · Claim Helper + News API + Wikipedia`,
+    combined
+  );
 }
 
-// --- FORM SUBMIT HANDLER (UPDATED) ---
-scannerForm?.addEventListener("submit", async (event) => {
+// ===== FORM SUBMIT (TEXT) =====
+on(scannerForm, "submit", async (event) => {
   event.preventDefault();
-  const text = claimInput.value.trim();
+  if (!claimInput) return;
 
+  const text = claimInput.value.trim();
   if (!text) {
     claimInput.focus();
     return;
   }
 
-  renderLoading("Running text verification…");
+  const truncated = text.slice(0, 1000);
+  if (truncated !== text) {
+    claimInput.value = truncated;
+    updateCounter();
+  }
 
-  // Try API first, fall back to local logic if unavailable
-  const apiResult = await callVerificationApi(text, "Text input");
+  toggleFormDisabled(true);
 
-  if (apiResult) {
-    renderResultFromApi(text, apiResult, "Text input");
-  } else {
-    // Fallback: local rule-based verification
-    await wait(500);
-    renderResult(text, "Text input (Local)");
+  try {
+    await runClaimAnalysis(truncated, "Text input");
+  } finally {
+    toggleFormDisabled(false);
   }
 });
 
-async function wait(ms) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
-
-// --- CAMERA FUNCTIONS ---
+// ===== CAMERA + OCR =====
 async function openCamera() {
+  if (!cameraModal || !cameraVideo) return;
+
+  if (!window.isSecureContext || !navigator.mediaDevices?.getUserMedia) {
+    alert("Camera access needs HTTPS or localhost in a supported browser.");
+    return;
+  }
+
   try {
     cameraModal.hidden = false;
     document.body.classList.add("modal-open");
 
     stream = await navigator.mediaDevices.getUserMedia({
-      video: {
-        facingMode: { ideal: "environment" }
-      },
+      video: { facingMode: { ideal: "environment" } },
       audio: false
     });
 
@@ -359,83 +688,72 @@ function stopCamera() {
     stream.getTracks().forEach((track) => track.stop());
     stream = null;
   }
-  cameraVideo.srcObject = null;
+  if (cameraVideo) cameraVideo.srcObject = null;
 }
 
 function closeCamera() {
   stopCamera();
-  cameraModal.hidden = true;
+  if (cameraModal) {
+    cameraModal.hidden = true;
+  }
   document.body.classList.remove("modal-open");
 }
 
-openCameraBtn?.addEventListener("click", openCamera);
-cameraLaunchBtn?.addEventListener("click", openCamera);
-cameraCloseBtn?.addEventListener("click", closeCamera);
+on(openCameraBtn, "click", openCamera);
+on(cameraLaunchBtn, "click", openCamera);
+on(cameraCloseBtn, "click", closeCamera);
 
-cameraModal?.addEventListener("click", (event) => {
-  if (event.target === cameraModal) {
-    closeCamera();
-  }
+on(cameraModal, "click", (event) => {
+  if (event.target === cameraModal) closeCamera();
 });
 
 document.addEventListener("keydown", (event) => {
-  if (event.key === "Escape" && !cameraModal.hidden) {
+  if (event.key === "Escape" && cameraModal && !cameraModal.hidden) {
     closeCamera();
   }
 });
 
-captureBtn?.addEventListener("click", () => {
+on(captureBtn, "click", () => {
+  if (!cameraVideo || !cameraCanvas || !capturedPreview || !scanExtractedResult) return;
   if (!cameraVideo.videoWidth || !cameraVideo.videoHeight) return;
 
   cameraCanvas.width = cameraVideo.videoWidth;
   cameraCanvas.height = cameraVideo.videoHeight;
 
   const ctx = cameraCanvas.getContext("2d");
+  if (!ctx) return;
+
   ctx.drawImage(cameraVideo, 0, 0, cameraCanvas.width, cameraCanvas.height);
 
   capturedImageUrl = cameraCanvas.toDataURL("image/png");
   capturedPreview.src = capturedImageUrl;
-  scanExtractedResult.textContent = "Image captured. Click " + '“' + "Verify now" + '”' + " to extract text.";
+  scanExtractedResult.textContent = "Image captured. Click “Verify now” to extract text.";
 });
 
-retakeBtn?.addEventListener("click", () => {
-  capturedImageUrl = "";
-  lastExtractedText = "";
-  capturedPreview.removeAttribute("src");
-  scanExtractedResult.textContent = "Capture an image to extract text.";
-  scanProgress.hidden = true;
-  scanProgressBar.style.width = "0%";
-});
+on(retakeBtn, "click", resetScanState);
+on(newScanBtn, "click", resetScanState);
 
-verifyImageBtn?.addEventListener("click", async () => {
+on(verifyImageBtn, "click", async () => {
   if (!capturedImageUrl) {
     alert("Please capture an image first.");
     return;
   }
+
+  if (!scanProgress || !scanProgressBar || !scanProgressLabel || !scanExtractedResult) return;
 
   scanProgress.hidden = false;
   scanProgressBar.style.width = "0%";
   scanProgressLabel.textContent = "Extracting text from image…";
   scanExtractedResult.textContent = "OCR in progress...";
 
-  try {
-    const worker = await Tesseract.createWorker("eng", 1, {
-      logger: (msg) => {
-        if (msg.status) {
-          scanProgressLabel.textContent = msg.status;
-        }
-        if (typeof msg.progress === "number") {
-          scanProgressBar.style.width = `${Math.round(msg.progress * 100)}%`;
-        }
-      }
-    });
+  toggleOcrButtons(true);
 
+  try {
+    const worker = await getOcrWorker();
     const result = await worker.recognize(capturedImageUrl);
-    await worker.terminate();
 
     const text = (result?.data?.text || "").trim();
     lastExtractedText = text;
-
     scanProgressBar.style.width = "100%";
 
     if (!text) {
@@ -445,39 +763,75 @@ verifyImageBtn?.addEventListener("click", async () => {
     }
 
     scanExtractedResult.textContent = text;
-    claimInput.value = text.slice(0, 1000);
-    updateCounter();
 
-    renderLoading("Running camera-based verification…");
-
-    // Try API first, fall back to local logic
-    const apiResult = await callVerificationApi(text, "Camera OCR");
-
-    if (apiResult) {
-      renderResultFromApi(text, apiResult, "Camera OCR");
-    } else {
-      await wait(500);
-      renderResult(text, "Camera OCR (Local)");
+    if (claimInput) {
+      claimInput.value = text.slice(0, 1000);
+      updateCounter();
     }
+
+    await runClaimAnalysis(text, "Camera OCR");
   } catch (error) {
     console.error(error);
     scanExtractedResult.textContent =
       "OCR failed. Please try again with a clearer image.";
     scanProgressLabel.textContent = "Scan failed";
+  } finally {
+    toggleOcrButtons(false);
   }
 });
 
-newScanBtn?.addEventListener("click", () => {
+// ===== OCR WORKER MANAGEMENT =====
+async function getOcrWorker() {
+  if (!ocrWorkerPromise) {
+    ocrWorkerPromise = Tesseract.createWorker("eng", 1, {
+      logger: (msg) => {
+        if (!scanProgressLabel || !scanProgressBar) return;
+        if (msg.status) scanProgressLabel.textContent = msg.status;
+        if (typeof msg.progress === "number") {
+          scanProgressBar.style.width = `${Math.round(msg.progress * 100)}%`;
+        }
+      }
+    });
+  }
+  return ocrWorkerPromise;
+}
+
+// ===== UTILITIES =====
+function resetScanState() {
   capturedImageUrl = "";
   lastExtractedText = "";
-  capturedPreview.removeAttribute("src");
-  scanExtractedResult.textContent = "Capture an image to extract text.";
-  scanProgress.hidden = true;
-  scanProgressBar.style.width = "0%";
-});
+  if (capturedPreview) capturedPreview.removeAttribute("src");
+  if (scanExtractedResult) {
+    scanExtractedResult.textContent = "Capture an image to extract text.";
+  }
+  if (scanProgress) scanProgress.hidden = true;
+  if (scanProgressBar) scanProgressBar.style.width = "0%";
+}
+
+function toggleFormDisabled(disabled) {
+  if (!scannerForm) return;
+  const elements = scannerForm.querySelectorAll("input, textarea, button");
+  elements.forEach((el) => {
+    el.disabled = disabled;
+  });
+}
+
+function toggleOcrButtons(disabled) {
+  [captureBtn, retakeBtn, verifyImageBtn, newScanBtn].forEach((btn) => {
+    if (btn) btn.disabled = disabled;
+  });
+}
+
+function wait(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+function clamp(value, min, max) {
+  return Math.max(min, Math.min(max, value));
+}
 
 function escapeHtml(value) {
-  return value
+  return String(value)
     .replaceAll("&", "&amp;")
     .replaceAll("<", "&lt;")
     .replaceAll(">", "&gt;")
@@ -485,6 +839,7 @@ function escapeHtml(value) {
     .replaceAll("'", "&#39;");
 }
 
+// ===== SCROLL REVEAL =====
 const revealObserver = new IntersectionObserver(
   (entries) => {
     entries.forEach((entry) => {
@@ -493,13 +848,13 @@ const revealObserver = new IntersectionObserver(
       }
     });
   },
-  {
-    threshold: 0.15
-  }
+  { threshold: 0.15 }
 );
 
 document.querySelectorAll(".reveal").forEach((item) => {
   revealObserver.observe(item);
 });
 
+// Init
 updateCounter();
+startSampleRotation();
