@@ -35,11 +35,11 @@
 
 ## Overview
 
-The internet is optimized for speed, virality, and engagement, not for truth.[page:2]  
-Arixion AI explores what happens when you flip that: the interface is designed around **verification first**, not endless chat.[page:2]
+The internet is optimized for speed, virality, and engagement, not for truth.  
+Arixion AI explores what happens when you flip that: the interface is designed around **verification first**, not endless chat.
 
-Instead of “ask me anything”, the product is centered on **claims**—things you want to check, question, or investigate.[page:2]  
-This repo focuses on the **experience layer**: layout, flows, copy, and visual system for a verification‑first AI product.[page:2]
+Instead of “ask me anything”, the product is centered on **claims**—things you want to check, question, or investigate.  
+This repo focuses on the **experience layer**: layout, flows, copy, and visual system for a verification‑first AI product.
 
 > Noise in → structured analysis → clearer, more verifiable insight out
 
@@ -52,7 +52,7 @@ Arixion AI is optimized for **trust, structure, and clarity**.
 
 - Pushes users to think in terms of *claims* instead of open‑ended chatting.  
 - Makes room in the layout for “method” and “how we got here”, not just final results.  
-- Is intentionally **frontend‑only** here, so you can plug in any intelligence layer you want without being forced into a stack.  
+- Is intentionally **frontend‑only**, so you can plug in any intelligence layer you want without being forced into a stack.  
 
 ---
 
@@ -88,9 +88,9 @@ Arixion AI is aimed at people who care more about **“Can I trust this?”** th
 
 ## Live Demo
 
-- **Demo:** https://jigyasaquest.github.io/arixion-ai/[page:2]  
+- **Demo:** https://jigyasaquest.github.io/arixion-ai/  
 
-You can experience the full flow (claims → method → results views) directly in the browser.[page:2]
+You can experience the full flow (claims → method → results views) directly in the browser.
 
 ---
 
@@ -98,16 +98,21 @@ You can experience the full flow (claims → method → results views) directly 
 
 ### Desktop
 
-- [Desktop home](assets/desktop-home.jpg) – Primary landing and entry point for verification.  
-- [Desktop scanner](assets/desktop-scanner.jpg) – Visual design for a scanning / capture flow.  
-- [Desktop method](assets/desktop-method.jpg) – “How it works” / method view.  
+![Desktop home – primary landing and entry point for verification](assets/desktop-home.jpg)
+
+![Desktop scanner – visual design for a scanning / capture flow](assets/desktop-scanner.jpg)
+
+![Desktop method – “How it works” / method view](assets/desktop-method.jpg)
 
 ### Mobile
 
-- [Mobile home](assets/mobile-home.jpeg)  
-- [Mobile scanner](assets/mobile-scanner.jpeg)  
-- [Mobile method](assets/mobile-method.jpeg)  
-- [Mobile results](assets/mobile-results.jpeg)  
+![Mobile home](assets/mobile-home.jpeg)
+
+![Mobile scanner](assets/mobile-scanner.jpeg)
+
+![Mobile method](assets/mobile-method.jpeg)
+
+![Mobile results](assets/mobile-results.jpeg)
 
 ---
 
@@ -152,7 +157,7 @@ No frameworks, no build step, no hidden magic.
 - HTML5 – semantic structure.  
 - CSS3 – responsive layout, typography, and theming.  
 - Vanilla JavaScript – UI behavior and interactions.  
-- Static deployment – works on GitHub Pages, any static host, or your own server.[page:2]  
+- Static deployment – works on GitHub Pages, any static host, or your own server.  
 
 This makes Arixion AI easy to:
 
@@ -191,7 +196,7 @@ Then open:
 http://localhost:8000
 ```
 
-You can also use VS Code Live Server, Nginx, or any other static server you prefer.[page:2]
+You can also use VS Code Live Server, Nginx, or any other static server you prefer.
 
 ---
 
@@ -244,13 +249,13 @@ You can help by:
 1. Fork the repository.  
 2. Create a feature branch.  
 3. Make your changes.  
-4. Open a pull request with a clear description and, ideally, screenshots.[page:2]  
+4. Open a pull request with a clear description and, ideally, screenshots.  
 
 ---
 
 ## License
 
-This project is licensed under the **MIT License**.[page:2]
+This project is licensed under the **MIT License**.
 
 ---
 
