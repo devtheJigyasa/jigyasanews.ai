@@ -27,6 +27,10 @@ const newScanBtn = document.getElementById("new-scan-btn");
 const SAMPLE_CLAIM =
   "Breaking: Scientists confirm a viral drink can cure all seasonal illnesses in 24 hours.";
 
+// --- API CONFIG ---
+const API_URL = "http://localhost:4000"; // Local dev. Replace with your hosted backend URL.
+// Example: const API_URL = "https://your-app.onrender.com";
+
 let stream = null;
 let capturedImageUrl = "";
 let lastExtractedText = "";
@@ -67,6 +71,7 @@ claimInput?.addEventListener("keydown", (event) => {
   }
 });
 
+// --- OLD VERDICT LOGIC (kept as fallback) ---
 function verdictFromText(text) {
   const normalized = text.toLowerCase();
   let label = "Needs verification";
@@ -129,6 +134,7 @@ function verdictFromText(text) {
   };
 }
 
+// --- RENDER FUNCTIONS ---
 function renderResult(claimText, sourceType = "Text input") {
   const cleanClaim = claimText.trim();
   if (!cleanClaim) return;
@@ -186,6 +192,84 @@ function renderResult(claimText, sourceType = "Text input") {
   });
 }
 
+function renderResultFromApi(claimText, apiResult, sourceType = "Text input") {
+  const cleanClaim = claimText.trim();
+  if (!cleanClaim) return;
+
+  const {
+    confidence = 0.5,
+    label = "Needs verification",
+    tone = "uncertain",
+    reasons = [],
+    articles = []
+  } = apiResult;
+
+  const percent = Math.round(confidence * 100);
+
+  statusBadge.className = `status-badge ${tone}`;
+  statusBadge.textContent = label;
+
+  const articlesHtml = articles.length
+    ? `
+      <div class="report-block">
+        <h4>Related Coverage</h4>
+        <ul>
+          ${articles
+            .map(a => `
+              <li>
+                <strong>${escapeHtml(a.title || "Article")}</strong>
+                ${a.source ? ` — ${escapeHtml(a.source)}` : ""}
+                ${a.url ? ` — <a href="${escapeHtml(a.url)}" target="_blank" rel="noopener">Open</a>` : ""}
+              </li>
+            `)
+            .join("")}
+        </ul>
+      </div>
+    `
+    : "";
+
+  resultContent.innerHTML = `
+    <div class="report-card">
+      <div class="report-summary">
+        <div class="report-claim">
+          <strong>Scanned input:</strong><br />
+          ${escapeHtml(cleanClaim)}
+        </div>
+
+        <div class="report-grid">
+          <div class="report-stat">
+            <span>Source</span>
+            <strong>${escapeHtml(sourceType)}</strong>
+          </div>
+          <div class="report-stat">
+            <span>Confidence</span>
+            <strong>${percent}%</strong>
+          </div>
+          <div class="report-stat">
+            <span>Verdict</span>
+            <strong>${escapeHtml(label)}</strong>
+          </div>
+        </div>
+
+        <div class="report-block">
+          <h4>Why this result</h4>
+          <ul>
+            ${(reasons.length ? reasons : ["No detailed reasoning provided."])
+              .map(r => `<li>${escapeHtml(r)}</li>`)
+              .join("")}
+          </ul>
+        </div>
+        ${articlesHtml}
+      </div>
+    </div>
+  `;
+
+  document.getElementById("results")?.scrollIntoView({
+    behavior: "smooth",
+    block: "start"
+  });
+}
+
 function renderLoading(message = "Running verification pass…") {
   statusBadge.className = "status-badge pending";
   statusBadge.textContent = "Scanning";
@@ -198,6 +282,28 @@ function renderLoading(message = "Running verification pass…") {
   `;
 }
 
+// --- API CALL FUNCTION ---
+async function callVerificationApi(claimText, sourceType) {
+  try {
+    const response = await fetch(`${API_URL}/verify`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ claim: claimText, source: sourceType })
+    });
+
+    if (!response.ok) {
+      throw new Error(`API error: ${response.status}`);
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error("API call failed:", error);
+    // Fallback to local logic if API is not available
+    return null;
+  }
+}
+
+// --- FORM SUBMIT HANDLER (UPDATED) ---
 scannerForm?.addEventListener("submit", async (event) => {
   event.preventDefault();
   const text = claimInput.value.trim();
@@ -209,10 +315,23 @@ scannerForm?.addEventListener("submit", async (event) => {
 
   renderLoading("Running text verification…");
 
-  await wait(700);
-  renderResult(text, "Text input");
+  // Try API first, fall back to local logic if unavailable
+  const apiResult = await callVerificationApi(text, "Text input");
+
+  if (apiResult) {
+    renderResultFromApi(text, apiResult, "Text input");
+  } else {
+    // Fallback: local rule-based verification
+    await wait(500);
+    renderResult(text, "Text input (Local)");
+  }
 });
 
+async function wait(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+// --- CAMERA FUNCTIONS ---
 async function openCamera() {
   try {
     cameraModal.hidden = false;
@@ -276,7 +395,7 @@ captureBtn?.addEventListener("click", () => {
 
   capturedImageUrl = cameraCanvas.toDataURL("image/png");
   capturedPreview.src = capturedImageUrl;
-  scanExtractedResult.textContent = "Image captured. Click “Verify now” to extract text.";
+  scanExtractedResult.textContent = "Image captured. Click " + '“' + "Verify now" + '”' + " to extract text.";
 });
 
 retakeBtn?.addEventListener("click", () => {
@@ -330,8 +449,16 @@ verifyImageBtn?.addEventListener("click", async () => {
     updateCounter();
 
     renderLoading("Running camera-based verification…");
-    await wait(700);
-    renderResult(text, "Camera OCR");
+
+    // Try API first, fall back to local logic
+    const apiResult = await callVerificationApi(text, "Camera OCR");
+
+    if (apiResult) {
+      renderResultFromApi(text, apiResult, "Camera OCR");
+    } else {
+      await wait(500);
+      renderResult(text, "Camera OCR (Local)");
+    }
   } catch (error) {
     console.error(error);
     scanExtractedResult.textContent =
@@ -348,10 +475,6 @@ newScanBtn?.addEventListener("click", () => {
   scanProgress.hidden = true;
   scanProgressBar.style.width = "0%";
 });
-
-function wait(ms) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
 
 function escapeHtml(value) {
   return value
