@@ -167,10 +167,14 @@ The visual direction is based on:
 - HTML5
 - CSS3
 - JavaScript
+- Node.js (backend)
+- Express.js (API server)
+- NewsAPI (web search)
+- Tesseract.js (OCR)
 - Static front-end architecture
 - Camera-based browser workflow
 - OCR-enabled scanning interface
-
+- 
 ---
 
 ## Getting Started
