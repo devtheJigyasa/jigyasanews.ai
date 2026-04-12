@@ -182,19 +182,69 @@ git clone https://github.com/JigyasaQuest/arixion-ai.git
 cd arixion-ai
 ```
 
-### Run locally
+### Prerequisites
+
+- **Node.js** (v14 or higher) - [Download here](https://nodejs.org/)
+- **npm** (comes with Node.js)
+- A free API key from [NewsAPI.org](https://newsapi.org/) (for web search verification)
+
+### Step 1: Set up the Backend
+
+The backend handles web search verification using NewsAPI. Follow these steps:
 
 ```bash
+# Navigate to the backend folder
+cd backend
+
+# Install dependencies
+npm install
+
+# Create environment file
+cp .env.example .env
+
+# Open .env and add your NewsAPI key
+# Get a free key at https://newsapi.org/register
+```
+
+Edit the `.env` file and add your NewsAPI key:
+
+```
+NEWS_API_KEY=your_newsapi_key_here
+PORT=4000
+```
+
+### Step 2: Start the Backend Server
+
+```bash
+# From the backend folder
+node server.js
+```
+
+The backend will start at `http://localhost:4000`
+
+### Step 3: Run the Frontend
+
+Open a **new terminal** (keep the backend running):
+
+```bash
+# From the root project folder
+cd ..
 python -m http.server 8000
 ```
 
-Then open:
+Then open in your browser:
 
-```bash
+```
 http://localhost:8000
 ```
 
----
+### How It Works
+
+1. **Scan or type a claim** - Use the camera to scan text or type a claim manually
+2. **AI Verification** - The frontend sends the claim to the backend
+3. **Web Search** - The backend searches NewsAPI for related articles
+4. **Analysis** - Results are scored based on trusted sources (BBC, Reuters, The Hindu, etc.)
+5. **Verdict** - A confidence score and verdict are returned to the frontend
 
 ## Project Structure
 
@@ -204,6 +254,12 @@ arixion-ai/
 ├── style.css
 ├── script.js
 ├── README.md
+├── .env.example
+├── .gitignore
+├── backend/
+│   ├── server.js
+│   ├── package.json
+│   └── .env
 └── assets/
     ├── desktop-home.jpg
     ├── desktop-scanner.jpg
@@ -214,7 +270,9 @@ arixion-ai/
     └── mobile-results.jpeg
 ```
 
----
+
+
+
 
 ## Roadmap
 
