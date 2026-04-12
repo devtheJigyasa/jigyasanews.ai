@@ -190,7 +190,6 @@ cd arixion-ai
 
 - **Node.js** (v14 or higher) - [Download here](https://nodejs.org/)
 - **npm** (comes with Node.js)
-- A free API key from [NewsAPI.org](https://newsapi.org/) (for web search verification)
 
 ### Step 1: Set up the Backend
 
@@ -206,14 +205,14 @@ npm install
 # Create environment file
 cp .env.example .env
 
-# Open .env and add your NewsAPI key
-# Get a free key at https://newsapi.org/register
-```
-
-Edit the `.env` file and add your NewsAPI key:
+# Open .env and add your API key
 
 ```
-NEWS_API_KEY=your_newsapi_key_here
+
+Edit the `.env` file and add your API key:
+
+```
+NEWS_API_KEY=your_api_key_here
 PORT=4000
 ```
 
